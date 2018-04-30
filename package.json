@@ -1,0 +1,23 @@
+{
+  "name": "whatstradelocked.com",
+  "version": "1.0.0",
+  "description": "whatstradelocked.com ==============",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/gergelyszabo/whatstradelocked.com.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/gergelyszabo/whatstradelocked.com/issues"
+  },
+  "homepage": "https://gitlab.com/gergelyszabo/whatstradelocked.com#README",
+  "dependencies": {
+    "express": "^4.16.3",
+    "hbs": "^4.0.1"
+  }
+}
