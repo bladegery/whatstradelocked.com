@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>What's tradable?</title>
+</head>
+<body>
+
+<form action="/" method="post">
+    <label for="steamid">Enter steam id: </label>
+    <input id="steam_user_input" type="text" name="steam_user_input" value="">
+    <!--Steam id or steam profile link-->
+    <input type="submit" value="Get inventory">
+    <label for ="example">Example steam id: 76561198036030455</label>
+</form>
+
+<div>
+{{#each items}}
+    <div>
+    <ul>
+        <li>
+        {{this.name}}
+        </li>
+        <li>
+            {{this.tradability}}
+        </li>
+    </ul>
+    </div>
+{{/each}}
+</div>
+
+<!--<h1>{{pageTitle}}</h1>-->
+
+<!--<p>some text</p>-->
+<!--<p>{{screamIt 'screaaam'}}</p>-->
+<!--{{> footer}}-->
+</body>
+</html>

@@ -17,7 +17,10 @@
   },
   "homepage": "https://gitlab.com/gergelyszabo/whatstradelocked.com#README",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "hbs": "^4.0.1"
+    "express-validator": "^5.1.2",
+    "hbs": "^4.0.1",
+    "request": "^2.85.0"
   }
 }
