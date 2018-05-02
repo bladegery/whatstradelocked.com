@@ -1,30 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-48407333-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-48407333-2');
+    </script>
+
+    <meta name="google-site-verification" content="UHZYt77KEObjJKp8NrG-qLbsEIswXUVAi13kkhm-WLI" />
+
     <meta charset="UTF-8">
-    <title>What's tradable?</title>
+    <title>What's trade locked?</title>
+
+    <link href="/css/whatstradelocked.css" rel="stylesheet">
+    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/countdown.js"></script>
+    <script src="/js/whatstradelocked.js"></script>
+
+
 </head>
 <body>
 
+<h1>What's trade locked?</h1>
+<h3>(In early development)</h3>
+<p>Find out which items have trade restrictions and when they are tradable. Enter someone’s steam profile link to load their inventory. </p>
+
 <form action="/" method="post">
-    <label for="steamid">Enter steam id: </label>
+    <label for="steamid">Steam profile link: </label>
     <input id="steam_user_input" type="text" name="steam_user_input" value="">
-    <!--Steam id or steam profile link-->
-    <input type="submit" value="Get inventory">
-    <label for ="example">Example steam id: 76561198036030455</label>
+    <input type="submit" value="Load inventory">
+    <label for ="example">Example: https://steamcommunity.com/id/gergelyszabo/</label>
 </form>
+
+<p>
+    What is a trade lock? At the end of March of 2018 Valve implemented a <a target="_blank" href="http://blog.counter-strike.net/index.php/2018/03/20308/">new update to CS:GO trading</a>.
+    They restrict the trading of newly received items by locking them to the account for 7 days.
+    Once an inventory is loaded there is a countdown displayed for every item that marks the end of this seven-day trade cooldown.
+</p>
 
 <div>
 {{#each items}}
-    <div>
-    <ul>
-        <li>
+    <div class="container" id="inventoryItem{{@index}}">
+        <h4>
         {{this.name}}
-        </li>
-        <li>
+        </h4>
+        <img src="{{this.icon}}" alt="{{this.name}}">
+        <!--<span id="tradability{{@index}}">-->
+            <!--{{this.tradability}}-->
+        <!--</span>-->
+        <span class = "tradability">
             {{this.tradability}}
-        </li>
-    </ul>
+        </span>
+        <div class="countdown" data-countdown="{{this.tradability}}">
+            {{this.tradability}}
+        </div>
     </div>
 {{/each}}
 </div>

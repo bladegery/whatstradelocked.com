@@ -25,55 +25,78 @@ app.use((req, res, next) =>{
 
 //TODO:
 //secure input and make it more user friendly by accepting profile links
+//Respond to user on private inventory request
+//Handle to many requests 429 (rate-limit)
 
 
 const steam_static_image_url = 'https://steamcommunity-a.akamaihd.net/economy/image/';
 const iconSize = '/96fx96f'; //can switch number to 128, 256, etc. for larger or 32, etc. for smaller
+const steamAPIKey = '083D3F215CEFFEE1911D32AC211B2B85';
+const steamCommunityRegex = new RegExp('steamcommunity.com/id/|steamcommunity.com/profiles/');
 
 app.post("/",function(req,res){
 
-    let steamid = req.body.steam_user_input;
+    let userinput = req.body.steam_user_input;
 
-    console.log("Getting items..");
+        if(steamCommunityRegex.test(userinput)){
 
-    request('https://steamcommunity.com/profiles/' + steamid + '/inventory/json/730/2', (error, response, body) => {
-        if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
-        let items = JSON.parse(body).rgDescriptions;
-
-
-        let itemsArray = [];
-
-        for (let item in items) {
-            if(items[item].marketable===1) {
-                let name = items[item].name;
-                let exterior = items[item].descriptions[0].value.split('Exterior: ')[1];
-                exterior = exterior === undefined ? "" : exterior;
-                let namecolor = items[item].name_color;
-                let icon = steam_static_image_url + items[item].icon_url+iconSize;
-                let iconLarge = steam_static_image_url + items[item].icon_url_large;
-                let type = items[item].type;
-                let tradability = "Tradable";
-                if (items[item].tradable === 0) {
-                    tradability = new Date(items[item].cache_expiration);
-                }
-
-                itemsArray.push({
-                    name: name,
-                    exterior: exterior,
-                    type: type,
-                    icon: icon,
-                    namecolor: namecolor,
-                    iconLarge: iconLarge,
-                    tradability: tradability.toString(),
-                })
+            let vanityUrl = userinput.split('steamcommunity.com/id/')[1];
+            if(vanityUrl===''){
+                vanityUrl = userinput.split('steamcommunity.com/profiles/')[1];
             }
-        }
-        res.render('index.hbs', {
-            items: itemsArray
-        });
-    });
-});
+            vanityUrl = vanityUrl.split('/')[0];
 
+            let apiUrl = 'https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=' + steamAPIKey+ '&vanityurl=' +vanityUrl;
+
+            request(apiUrl, (error, response, body) => {
+                if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+                let steamid = JSON.parse(body).response.steamid;
+
+                console.log("Getting items..");
+
+                request('https://steamcommunity.com/profiles/' + steamid + '/inventory/json/730/2', (error, response, body) => {
+                    if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+                    let items = JSON.parse(body).rgDescriptions;
+
+
+                    let itemsArray = [];
+
+                    for (let item in items) {
+                        if(items[item].marketable===1) {
+                            let name = items[item].name;
+                            let exterior = items[item].descriptions[0].value.split('Exterior: ')[1];
+                            exterior = exterior === undefined ? "" : exterior;
+                            let namecolor = items[item].name_color;
+                            let icon = steam_static_image_url + items[item].icon_url+iconSize;
+                            let iconLarge = steam_static_image_url + items[item].icon_url_large;
+                            let type = items[item].type;
+                            let tradability = "Tradable";
+                            if (items[item].tradable === 0) {
+                                tradability = new Date(items[item].cache_expiration);
+                            }
+
+                            itemsArray.push({
+                                name: name,
+                                exterior: exterior,
+                                type: type,
+                                icon: icon,
+                                namecolor: namecolor,
+                                iconLarge: iconLarge,
+                                tradability: tradability.toString(),
+                            })
+                        }
+                    }
+                    res.render('index.hbs', {
+                        items: itemsArray
+                    });
+                });
+
+            });
+        }
+        else {
+            console.log("That is not a valid Steam profile url!")
+        }
+});
 
 // app.post('/', function (req, res) {
 //     res.send('POST request to the homepage');
