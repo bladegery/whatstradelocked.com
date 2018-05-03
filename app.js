@@ -2,26 +2,24 @@
 
 const request = require("request");
 
-function getSteamID(userinput){
-    if(steamCommunityRegex.test(userinput)){
 
-        let vanityUrl = userinput.split('steamcommunity.com/id/')[1];
-        if(vanityUrl===''){
-            vanityUrl = userinput.split('steamcommunity.com/profiles/')[1];
-        }
-        vanityUrl = vanityUrl.split('/')[0];
 
-        let apiUrl = 'https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=' + steamAPIKey+ '&vanityurl=' +vanityUrl;
+const steamIDregex = new RegExp('[0-9]{17}');
 
-        request(apiUrl, (error, response, body) => {
-            if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
-            let steamid = JSON.parse(body).response.steamid;
-            console.log(steamid);
-            return steamid;
+console.log(isSteamId(765611986161235))
 
+function isSteamId(input){
+    return steamIDregex.test(input);
+}
+
+
+request('https://steamcommunity.com/profiles/765611986161235/inventory/json/730/2', (error, response, body) => {
+    console.log(response.statusCode);
+    if(response.statusCode === 429){
+        res.render('index.hbs', {
+            items: [],
+            error: 'Could not get inventory from Steam, try again later?'
         });
     }
-    else {
-        console.log("That is not a valid Steam profile url!")
-    }
-}
+    if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+});

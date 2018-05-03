@@ -26,13 +26,13 @@ app.use((req, res, next) =>{
 //TODO:
 //secure input and make it more user friendly by accepting profile links
 //Respond to user on private inventory request
-//Handle to many requests 429 (rate-limit)
 
 
 const steam_static_image_url = 'https://steamcommunity-a.akamaihd.net/economy/image/';
 const iconSize = '/96fx96f'; //can switch number to 128, 256, etc. for larger or 32, etc. for smaller
 const steamAPIKey = '083D3F215CEFFEE1911D32AC211B2B85';
 const steamCommunityRegex = new RegExp('steamcommunity.com/id/|steamcommunity.com/profiles/');
+const steamIDregex = new RegExp('[0-9]{17}');
 
 app.post("/",function(req,res){
 
@@ -50,11 +50,33 @@ app.post("/",function(req,res){
 
             request(apiUrl, (error, response, body) => {
                 if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
-                let steamid = JSON.parse(body).response.steamid;
+                let steamIDResponse = JSON.parse(body).response.steamid;
+
+                let steamid = steamIDResponse;
+
+                if(steamIDResponse===undefined){
+                    if(steamIDregex.test(vanityUrl)){
+                        steamid = vanityUrl;
+                    }
+                    else{
+                        res.render('index.hbs', {
+                            items: [],
+                            error: 'That is not a valid Steam profile url!'
+                        });
+                        return
+                    }
+                }
 
                 console.log("Getting items..");
 
                 request('https://steamcommunity.com/profiles/' + steamid + '/inventory/json/730/2', (error, response, body) => {
+                    if(response.statusCode === 429){
+                        res.render('index.hbs', {
+                            items: [],
+                            error: 'Could not get inventory from Steam, try again later?'
+                        });
+                        return
+                    }
                     if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
                     let items = JSON.parse(body).rgDescriptions;
 
@@ -94,7 +116,11 @@ app.post("/",function(req,res){
             });
         }
         else {
-            console.log("That is not a valid Steam profile url!")
+            res.render('index.hbs', {
+                items: [],
+                error: 'That is not a valid Steam profile url!'
+            });
+            return
         }
 });
 

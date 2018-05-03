@@ -21,7 +21,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/js/bootstrap/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/countdown.js"></script>
     <script src="/js/whatstradelocked.js"></script>
 
 
@@ -45,22 +44,24 @@
     Once an inventory is loaded there is a countdown displayed for every item that marks the end of this seven-day trade cooldown.
 </p>
 
-<div>
+<div id="error">
+    <span>{{error}}</span>
+</div>
+
+<div id="inventory">
 {{#each items}}
     <div class="container" id="inventoryItem{{@index}}">
         <h4>
         {{this.name}}
         </h4>
+        <span>{{this.exterior}}</span>
+        <a href="{{this.iconLarge}}">
         <img src="{{this.icon}}" alt="{{this.name}}">
-        <!--<span id="tradability{{@index}}">-->
-            <!--{{this.tradability}}-->
-        <!--</span>-->
+        </a>
         <span class = "tradability">
             {{this.tradability}}
         </span>
-        <div class="countdown" data-countdown="{{this.tradability}}">
-            {{this.tradability}}
-        </div>
+        <div class="countdown" data-countdown="{{this.tradability}}"></div>
     </div>
 {{/each}}
 </div>
@@ -69,6 +70,6 @@
 
 <!--<p>some text</p>-->
 <!--<p>{{screamIt 'screaaam'}}</p>-->
-<!--{{> footer}}-->
+{{> footer}}
 </body>
 </html>
