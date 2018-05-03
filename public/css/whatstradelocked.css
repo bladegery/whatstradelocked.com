@@ -1,3 +1,31 @@
+body {
+    padding-top: 54px;
+}
+@media (min-width: 992px) {
+    body {
+        padding-top: 56px;
+    }
+}
+
 .countdown{
     color:red;
 }
+
+.inventoryItem{
+    border: 1px;
+    margin: 0.5rem;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+}
+
+#inventory{
+    display: -webkit-flex; /* Safari */
+    -webkit-flex-flow: row-reverse wrap; /* Safari 6.1+ */
+    display: flex;
+    flex-flow: row wrap;
+}
+
+

@@ -2,6 +2,7 @@ const express = require('express'),
     hbs = require('hbs'),
     bodyParser = require('body-parser'),
     request = require("request"),
+    pathToRegexp = require('path-to-regexp'),
     app = express();
 
 
@@ -41,7 +42,7 @@ app.post("/",function(req,res){
         if(steamCommunityRegex.test(userinput)){
 
             let vanityUrl = userinput.split('steamcommunity.com/id/')[1];
-            if(vanityUrl===''){
+            if(vanityUrl===undefined){
                 vanityUrl = userinput.split('steamcommunity.com/profiles/')[1];
             }
             vanityUrl = vanityUrl.split('/')[0];
@@ -78,6 +79,15 @@ app.post("/",function(req,res){
                         return
                     }
                     if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+
+                    if(!JSON.parse(body).success){
+                        res.render('index.hbs', {
+                            items: [],
+                            error: JSON.parse(body).Error
+                        });
+                        return
+                    }
+
                     let items = JSON.parse(body).rgDescriptions;
 
 
@@ -123,6 +133,75 @@ app.post("/",function(req,res){
             return
         }
 });
+
+
+app.get('/inventory/:id', function (req, res, next) {
+    if(steamIDregex.test(req.params.id)){
+        var steamid = req.params.id;
+
+        console.log("Getting items..");
+
+        request('https://steamcommunity.com/profiles/' + steamid + '/inventory/json/730/2', (error, response, body) => {
+            if(response.statusCode === 429){
+                res.render('index.hbs', {
+                    items: [],
+                    error: 'Could not get inventory from Steam, try again later?'
+                });
+                return
+            }
+            if (error || response.statusCode !== 200) return console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+
+            if(!JSON.parse(body).success){
+                res.render('index.hbs', {
+                    items: [],
+                    error: JSON.parse(body).Error
+                });
+                return
+            }
+
+            let items = JSON.parse(body).rgDescriptions;
+
+
+            let itemsArray = [];
+
+            for (let item in items) {
+                if(items[item].marketable===1) {
+                    let name = items[item].name;
+                    let exterior = items[item].descriptions[0].value.split('Exterior: ')[1];
+                    exterior = exterior === undefined ? "" : exterior;
+                    let namecolor = items[item].name_color;
+                    let icon = steam_static_image_url + items[item].icon_url+iconSize;
+                    let iconLarge = steam_static_image_url + items[item].icon_url_large;
+                    let type = items[item].type;
+                    let tradability = "Tradable";
+                    if (items[item].tradable === 0) {
+                        tradability = new Date(items[item].cache_expiration);
+                    }
+
+                    itemsArray.push({
+                        name: name,
+                        exterior: exterior,
+                        type: type,
+                        icon: icon,
+                        namecolor: namecolor,
+                        iconLarge: iconLarge,
+                        tradability: tradability.toString(),
+                    })
+                }
+            }
+            res.render('index.hbs', {
+                items: itemsArray
+            });
+        });
+    }
+    else{
+        res.render('index.hbs', {
+            items: [],
+            error: 'No profile with that id!'
+        });
+    }
+});
+
 
 // app.post('/', function (req, res) {
 //     res.send('POST request to the homepage');
