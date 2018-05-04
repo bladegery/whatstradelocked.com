@@ -22,6 +22,7 @@
     "express-validator": "^5.1.2",
     "hbs": "^4.0.1",
     "path-to-regexp": "^2.2.1",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "steam-id-convertor": "^1.0.1"
   }
 }
