@@ -12,7 +12,7 @@ const express = require('express'),
 const steam_static_image_url = 'https://steamcommunity-a.akamaihd.net/economy/image/',
     iconSize = '/96fx96f', //can switch number to 128, 256, etc. for larger or 32, etc. for smaller
     steamAPIKey = '083D3F215CEFFEE1911D32AC211B2B85',
-    steamCommunityRegex = new RegExp('steamcommunity.com/id/|steamcommunity.com/profiles/|steamcommunity.com/tradeoffer/new/?partner='),
+    steamCommunityRegex = new RegExp('steamcommunity.com/id/|steamcommunity.com/profiles/|steamcommunity.com/tradeoffer/new/\\?partner='),
     steamID64regex = new RegExp('[0-9]{17}');
 
 hbs.registerPartials(__dirname +'/views/partials');
