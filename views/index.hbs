@@ -52,27 +52,32 @@
                 They restrict the trading of newly received items by locking them to the account for 7 days.
                 Once an inventory is loaded there is a countdown displayed for every item that marks the end of this seven-day trade cooldown.
             </p>
+            <p>
+                PS: I am working on the rate limiting issues.
+            </p>
 
             <div id="error">
                 <span>{{error}}</span>
             </div>
             <br>
             <div id="inventory">
-            {{#each items}}
-                <div class="inventoryItem" id="inventoryItem{{@index}}">
-                    <h4>
-                    {{this.name}}
-                    </h4>
-                    <p>{{this.exterior}}</p>
-                    <a href="{{this.iconLarge}}" data-lightbox="{{this.name}} {{this.exterior}}">
-                    <img src="{{this.icon}}" alt="{{this.name}}">
-                    </a>
-                    <p class = "tradability">
-                        {{this.tradability}}
-                    </p>
-                    <div class="countdown" data-countdown="{{this.tradability}}"></div>
+                <div class="row">
+                    {{#each items}}
+                        <div class="inventoryItem col-md-2" id="inventoryItem{{@index}}">
+                            <h5>
+                            {{this.name}}
+                            </h5>
+                            <p>{{this.exterior}}</p>
+                            <a href="{{this.iconLarge}}" data-lightbox="{{this.name}} {{this.exterior}}">
+                            <img src="{{this.icon}}" alt="{{this.name}}">
+                            </a>
+                            <p class = "tradability">
+                                {{this.tradability}}
+                            </p>
+                            <div class="countdown" data-countdown="{{this.tradability}}"></div>
+                        </div>
+                    {{/each}}
                 </div>
-            {{/each}}
             </div>
         </div>
     </div>

@@ -1,6 +1,13 @@
 body {
     padding-top: 54px;
+    background-color: #1d2124;
 }
+h1,h2,h3,h4,h5,p {
+    color: white;
+}
+
+
+
 @media (min-width: 992px) {
     body {
         padding-top: 56px;
@@ -12,7 +19,13 @@ body {
 }
 
 .inventoryItem{
-    border: 1px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    background-color: black;
     margin: 0.5rem;
 }
 
@@ -22,10 +35,11 @@ footer {
 }
 
 #inventory{
-    display: -webkit-flex; /* Safari */
-    -webkit-flex-flow: row-reverse wrap; /* Safari 6.1+ */
-    display: flex;
-    flex-flow: row wrap;
+    /*background-color: #636768;*/
+}
+
+#error{
+    color:red;
 }
 
 

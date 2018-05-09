@@ -23,7 +23,6 @@ $(document).ready(function(){
                     clearInterval(x);
                     $this.text("Tradable");
                 }
-
             }, 1000);
         }
     });
