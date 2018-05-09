@@ -26,28 +26,19 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 app.use((req, res, next) =>{
     var now = new Date().toString();
-    console.log(`${now}: ${req.method} `);
+    console.log(`${now}: ${req.originalUrl} ${req.method}`);
     next();
 });
 
 //TODO:
-//secure input and make it more user friendly by accepting profile links
+//sanitize input fields before adding database
 
 app.post("/",function(req,res){
     // sanitize(req.body.steam_user_input).trim().escape()=>{
     //
     // }
     getSteamID64(req.body.steam_user_input).then((steamid) => {
-       getInventory(steamid).then((inventory) => {
-           res.render('index.hbs', {
-               items: inventory
-           });
-       }).catch((err) => {
-           res.render('index.hbs', {
-               items: [],
-               error: err
-           });
-       });
+        res.redirect('/inventory/'+steamid);
     }).catch((err) => {
         res.render('index.hbs', {
             items: [],
@@ -91,7 +82,9 @@ function getSteamID64(user_input) {
             }
             request('https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=' + steamAPIKey + '&vanityurl=' + idOrVanityURL, (error, response, body) => {
                 if (error || response.statusCode !== 200) {
-                    reject(`Error: ${error} - Status Code: ${response.statusCode}`);
+                    console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+                    reject('Couldn\'t get profile from Steam at this time');
+                    return
                 }
                 let steamIDResponse = JSON.parse(body).response.steamid;
 
@@ -101,7 +94,6 @@ function getSteamID64(user_input) {
                 else {
                     resolve(steamIDResponse);
                 }
-
             });
         }
         else{
@@ -129,16 +121,20 @@ function getInventory(steamid){
     return new Promise((resolve, reject)=>{
         request('https://steamcommunity.com/profiles/' + steamid + '/inventory/json/730/2', (error, response, body) => {
             if (response.statusCode === 429) {
+                console.log('Rate limited');
                 reject('Could not get inventory from Steam, try again later?');
+                return;
             }
             if (error || response.statusCode !== 200){
                 console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
-                reject(`Error: ${error} - Status Code: ${response.statusCode}`);
+                reject('Could not get inventory from Steam, try again later?');
+                return;
             }
 
             if (!JSON.parse(body).success) {
-                reject( JSON.parse(body).Error
-                );
+                console.log(JSON.parse(body).Error);
+                reject('Could not get inventory from Steam, try again later?');
+                return;
             }
 
             let items = JSON.parse(body).rgDescriptions;
