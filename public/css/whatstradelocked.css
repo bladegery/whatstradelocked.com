@@ -2,16 +2,24 @@ body {
     padding-top: 54px;
     background-color: #1d2124;
 }
-h1,h2,h3,h4,h5,p {
+h1,h2,h3,h4,h5,p,ul,li {
     color: white;
 }
 
-
+ul, li{
+    text-align: left;
+    list-style-position: inside;
+}
 
 @media (min-width: 992px) {
     body {
         padding-top: 56px;
     }
+}
+
+.nametag{
+    font-size: 0.7em;
+    color: #9fcdff;
 }
 
 .countdown{
@@ -24,9 +32,37 @@ h1,h2,h3,h4,h5,p {
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;
-    border-color: white;
+    border-color: lawngreen;
     background-color: black;
     margin: 0.5rem;
+}
+
+.base_grade, .consumer_grade{
+    background: rgba(255, 255, 255, .2); !important;
+}
+
+.classified, .exotic{
+    background: rgba(211, 44, 230, .2); !important;
+}
+
+.contraband{
+    background: rgba(228, 174, 57, .2); !important;
+}
+
+.covert, .extraordinary{
+    background: rgba(235, 75, 75, .2); !important;
+}
+
+.high_grade, .milspec_grade{
+    background: rgba(75, 105, 255, .2); !important;
+}
+
+.industrial_grade{
+    background: rgba(94, 152, 217, .2); !important;
+}
+
+.restricted, .remarkable{
+    background: rgba(136, 71, 255, .2); !important;
 }
 
 footer {

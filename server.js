@@ -3,7 +3,13 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     request = require("request"),
     steamIDConvertor = require("steam-id-convertor"),
-    app = express();
+    app = express(),
+    SteamUser = require("steam-user"),
+    SteamTotp = require("steam-totp"),
+    SteamCommunity = require("steamcommunity"),
+    community = new SteamCommunity(),
+    client = new SteamUser(),
+    steam = require("./steam.js");
 
 
 // const { check, validationResult } = require('express-validator/check');
@@ -14,6 +20,8 @@ const steam_static_image_url = 'https://steamcommunity-a.akamaihd.net/economy/im
     steamAPIKey = '083D3F215CEFFEE1911D32AC211B2B85',
     steamCommunityRegex = new RegExp('steamcommunity.com/id/|steamcommunity.com/profiles/|steamcommunity.com/tradeoffer/new/\\?partner='),
     steamID64regex = new RegExp('[0-9]{17}');
+
+
 
 hbs.registerPartials(__dirname +'/views/partials');
 app.set('view-engine', 'hbs');
@@ -46,6 +54,11 @@ app.post("/",function(req,res){
         });
     });
 });
+
+app.get("/changelog",function(req,res){
+        res.render('changelog.hbs');
+});
+
 
 
 app.get('/inventory/:id', function (req, res, next) {
@@ -138,6 +151,7 @@ function getInventory(steamid){
             }
 
             let items = JSON.parse(body).rgDescriptions;
+            let ids = JSON.parse(body).rgInventory;
 
 
             let itemsPropertiesToReturn = [];
@@ -145,6 +159,15 @@ function getInventory(steamid){
             for (let item in items) {
                 if (items[item].marketable === 1) {
                     let name = items[item].name;
+                    let marketlink = "https://steamcommunity.com/market/listings/730/" + items[item].market_hash_name;
+                    let classid = items[item].classid;
+                    let instanceid = items[item].instanceid;
+                    var assetid = "";
+                    for (let asset in ids){
+                        if(ids[asset].classid===classid&&ids[asset].instanceid===instanceid){
+                            assetid = ids[asset].id;
+                        }
+                    }
                     let exterior = items[item].descriptions[0].value.split('Exterior: ')[1];
                     exterior = exterior === undefined ? "" : exterior;
                     let namecolor = items[item].name_color;
@@ -153,18 +176,99 @@ function getInventory(steamid){
                     let type = items[item].type;
                     let tradability = "Tradable";
 
+
                     if (items[item].tradable === 0) {
                         tradability = new Date(items[item].cache_expiration);
                     }
 
+                    var description ="";
+                    try {
+                        if(items[item].descriptions!==undefined||items[item].descriptions[2]!==undefined){
+                            description = items[item].descriptions[2].value;
+                        }
+                    }
+                    catch(error) {
+                    }
+
+                    var quality = "stock";
+                        if(/Base Grade/i.test(type)){
+                            quality ="base_grade";
+                        }
+                        else if(/Classified/i.test(type)){
+                            quality ="classified";
+                        }
+                        else if(/Consumer Grade/i.test(type)){
+                            quality ="consumer_grade";
+                        }
+                        else if(/Contraband/i.test(type)){
+                            quality ="contraband";
+                        }
+                        else if(/Covert/i.test(type)){
+                            quality ="covert";
+                        }
+                        else if(/Exotic/i.test(type)){
+                            quality ="exotic";
+                        }
+                        else if(/Extraordinary/i.test(type)){
+                            quality ="extraordinary";
+                        }
+                        else if(/High Grade/i.test(type)){
+                            quality ="high_grade";
+                        }
+                        else if(/Industrial Grade/i.test(type)){
+                            quality ="industrial_grade";
+                        }
+                        else if(/Mil-Spec Grade/i.test(type)){
+                            quality ="milspec_grade";
+                        }
+                        else if(/Remarkable/i.test(type)){
+                            quality ="remarkable";
+                        }
+                        else if(/Restricted/i.test(type)){
+                            quality ="restricted";
+                        }
+                        else if(/Stock/i.test(type)){
+                            quality ="stock";
+                        }
+
+                    var nametag ="";
+                    try {
+                        if(items[item].fraudwarnings!==undefined||items[item].fraudwarnings[0]!==undefined){
+                            nametag = items[item].fraudwarnings[0].split('Name Tag: ')[1];
+                        }
+                    }
+                    catch(error) {
+                    }
+
+
+                    var inspectLink ="";
+                    try {
+                        if(items[item].actions!==undefined||items[item].actions[0]!==undefined){
+                            let beggining = items[item].actions[0].link.split('%20S')[0];
+                            let end = items[item].actions[0].link.split('%assetid%')[1];
+                            inspectLink = beggining + "%20S"+steamid + "A"+ assetid + end;
+                        }
+                    }
+                    catch(error) {
+                    }
+
+
                     itemsPropertiesToReturn.push({
                         name: name,
+                        marketlink: marketlink,
+                        classid: classid,
+                        instanceid: instanceid,
+                        assetid: assetid,
                         exterior: exterior,
                         type: type,
                         icon: icon,
                         namecolor: namecolor,
                         iconLarge: iconLarge,
-                        tradability: tradability.toString(),
+                        tradability: tradability,
+                        quality: quality,
+                        nametag: nametag,
+                        inspectLink: inspectLink,
+                        description: description,
                     })
                 }
             }
@@ -172,6 +276,8 @@ function getInventory(steamid){
         });
     });
 }
+
+//steam.getInventory('76561198036030455');
 
 
 hbs.registerHelper('getCurrentYear', () =>{

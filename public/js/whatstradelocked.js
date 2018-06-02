@@ -1,6 +1,19 @@
 
 $(document).ready(function(){
 
+    $( ".inspect" ).each(function() {
+        if($(this).attr("href")===""){
+            $(this).hide();
+        }
+    });
+
+    $( ".inventoryItem" ).each(function() {
+        let $item = $(this);
+        if($(this).children(".countdown").attr("data-countdown")!=="Tradable"){
+            $item.css("border-color", "red");
+        }
+    });
+
     $( "[data-countdown]" ).each(function() {
         let $this = $(this);
 

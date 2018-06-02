@@ -19,10 +19,15 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "express-validator": "^5.1.2",
+    "express-validator": "^5.2.0",
     "hbs": "^4.0.1",
     "path-to-regexp": "^2.2.1",
+    "protobufjs": "^6.8.6",
     "request": "^2.85.0",
-    "steam-id-convertor": "^1.0.1"
+    "steam-client": "^2.5.7",
+    "steam-id-convertor": "^1.0.1",
+    "steam-totp": "^2.1.0",
+    "steam-user": "^3.27.1",
+    "steamcommunity": "^3.36.1"
   }
 }
