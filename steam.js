@@ -6,7 +6,8 @@ const SteamUser = require("steam-user"),
 
 client.logOn({
     accountName: "whatstradelockedcom",
-    password: "uqk69SO$$@AgoWaYv1D2W6Of"
+    password: "uqk69SO$$@AgoWaYv1D2W6Of",
+    twoFactorCode: SteamTotp.getAuthCode("+iDLuMbDvLVR15lmWEdgY88bDbY=")
 });
 
 client.on("loggedOn", (details, parental) => {

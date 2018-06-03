@@ -56,23 +56,31 @@ app.post("/",function(req,res){
 });
 
 app.get("/changelog",function(req,res){
-        res.render('changelog.hbs');
+    res.render('changelog.hbs');
 });
 
 
 
 app.get('/inventory/:id', function (req, res, next) {
     if(steamID64regex.test(req.params.id)){
-    getInventory(req.params.id).then((inventory) => {
-        res.render('index.hbs', {
-            items: inventory
+        getInventory(req.params.id).then((inventory) => {
+            getProfileDetails(req.params.id).then((profiledetails) => {
+                res.render('index.hbs', {
+                    items: inventory,
+                    profiledetails: profiledetails
+                });
+            }).catch((err) => {
+                res.render('index.hbs', {
+                    items: [],
+                    error: err
+                });
+            });
+        }).catch((err) => {
+            res.render('index.hbs', {
+                items: [],
+                error: err
+            });
         });
-    }).catch((err) => {
-        res.render('index.hbs', {
-            items: [],
-            error: err
-        });
-    });
     }
     else{
         res.render('index.hbs', {
@@ -191,45 +199,45 @@ function getInventory(steamid){
                     }
 
                     var quality = "stock";
-                        if(/Base Grade/i.test(type)){
-                            quality ="base_grade";
-                        }
-                        else if(/Classified/i.test(type)){
-                            quality ="classified";
-                        }
-                        else if(/Consumer Grade/i.test(type)){
-                            quality ="consumer_grade";
-                        }
-                        else if(/Contraband/i.test(type)){
-                            quality ="contraband";
-                        }
-                        else if(/Covert/i.test(type)){
-                            quality ="covert";
-                        }
-                        else if(/Exotic/i.test(type)){
-                            quality ="exotic";
-                        }
-                        else if(/Extraordinary/i.test(type)){
-                            quality ="extraordinary";
-                        }
-                        else if(/High Grade/i.test(type)){
-                            quality ="high_grade";
-                        }
-                        else if(/Industrial Grade/i.test(type)){
-                            quality ="industrial_grade";
-                        }
-                        else if(/Mil-Spec Grade/i.test(type)){
-                            quality ="milspec_grade";
-                        }
-                        else if(/Remarkable/i.test(type)){
-                            quality ="remarkable";
-                        }
-                        else if(/Restricted/i.test(type)){
-                            quality ="restricted";
-                        }
-                        else if(/Stock/i.test(type)){
-                            quality ="stock";
-                        }
+                    if(/Base Grade/i.test(type)){
+                        quality ="base_grade";
+                    }
+                    else if(/Classified/i.test(type)){
+                        quality ="classified";
+                    }
+                    else if(/Consumer Grade/i.test(type)){
+                        quality ="consumer_grade";
+                    }
+                    else if(/Contraband/i.test(type)){
+                        quality ="contraband";
+                    }
+                    else if(/Covert/i.test(type)){
+                        quality ="covert";
+                    }
+                    else if(/Exotic/i.test(type)){
+                        quality ="exotic";
+                    }
+                    else if(/Extraordinary/i.test(type)){
+                        quality ="extraordinary";
+                    }
+                    else if(/High Grade/i.test(type)){
+                        quality ="high_grade";
+                    }
+                    else if(/Industrial Grade/i.test(type)){
+                        quality ="industrial_grade";
+                    }
+                    else if(/Mil-Spec Grade/i.test(type)){
+                        quality ="milspec_grade";
+                    }
+                    else if(/Remarkable/i.test(type)){
+                        quality ="remarkable";
+                    }
+                    else if(/Restricted/i.test(type)){
+                        quality ="restricted";
+                    }
+                    else if(/Stock/i.test(type)){
+                        quality ="stock";
+                    }
 
                     var nametag ="";
                     try {
@@ -276,6 +284,54 @@ function getInventory(steamid){
         });
     });
 }
+
+function getProfileDetails(steamid){
+    return new Promise((resolve, reject)=>{
+        request('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + steamAPIKey + '&steamids=' + steamid, (error, response, body) => {
+            if (error) {
+                console.log('Could not load steam profile information');
+                reject({error: 'Could not load steam profile information'});
+                return;
+            }
+
+            var player = JSON.parse(body).response.players[0];
+
+            var personastate = 'Offline';
+
+            switch (player.personastate) {
+                case 0: personastate = 'Offline'; break;
+                case 1: personastate = 'Online'; break;
+                case 2: personastate = 'Busy'; break;
+                case 3: personastate = 'Away'; break;
+                case 4: personastate = 'Snooze'; break;
+                case 5: personastate = 'Looking to trade'; break;
+                case 6: personastate = 'Looking to play'; break;
+                default: personastate = 'Offline';
+            }
+
+            try {
+                if(player.gameid!==undefined||player.gameid>=0){
+                    personastate = 'In-game: ' + player.gameextrainfo;
+                }
+            }
+            catch(error) {
+            }
+
+            resolve({
+                error: 0,
+                personaname: player.personaname,
+                realname: player.realname,
+                profileurl: player.profileurl,
+                avatar: player.avatarfull,
+                personastate: personastate,
+                lastlogoff: player.lastlogoff,
+                timecreated: player.timecreated,
+                country: player.loccountrycode,
+            });
+        });
+    });
+}
+
 
 //steam.getInventory('76561198036030455');
 
