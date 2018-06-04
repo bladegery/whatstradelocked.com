@@ -49,40 +49,11 @@
             <div id="error">
                 <span>{{error}}</span>
             </div>
-            <br>
-            <h1>{{profiledetails.personaname}}'s inventory</h1>
-            <br>
-            <div id="inventory">
-                <div class="row">
-                    {{#each items}}
-                        <div class="inventoryItem col-md-2 {{this.quality}}" id="inventoryItem{{@index}}">
-                            <h5>
-                            {{this.name}}
-                            </h5>
-                            <p>{{this.exterior}}</p>
-                            <a href="{{this.iconLarge}}" data-lightbox="{{this.name}} {{this.exterior}}">
-                            <img src="{{this.icon}}" alt="{{this.name}}">
-                            </a>
-                            <p>
-                            <a class="inspect" href="{{this.inspectLink}}">Inspect</a> <span>&nbsp;</span> <a class="inspect" href="{{this.marketlink}}">Market</a>
-                            </p>
-                            <p class="nametag">
-                                {{this.nametag}}
-                            </p>
-                            <p class = "tradability">
-                                {{this.tradability}}
-                            </p>
-                            <div class="countdown" data-countdown="{{this.tradability}}"></div>
-                        </div>
-                    {{/each}}
-                </div>
-            </div>
         </div>
     </div>
 </div>
 <br>
-{{> footer}}
 
-<!--<p>{{screamIt 'screaaam'}}</p>-->
+{{> footer}}
 </body>
 </html>

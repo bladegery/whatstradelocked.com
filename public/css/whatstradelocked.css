@@ -11,10 +11,46 @@ ul, li{
     list-style-position: inside;
 }
 
+footer{
+    margin: 1rem;
+}
+
 @media (min-width: 992px) {
     body {
         padding-top: 56px;
     }
+}
+
+.avatar{
+    margin: 1rem;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 0.5rem;
+
+}
+
+.online{
+    border-color: #57cbde;
+    color: #57cbde;
+}
+
+.offline{
+    border-color: #898989;
+    color: #898989;
+}
+
+.ingame{
+    border-color: #90ba3c;
+    color: #90ba3c;
+}
+
+.profileInfo{
+    text-align: left;
+    padding: 1rem;
+}
+
+.profileStatus{
+    text-align: left;
 }
 
 .nametag{
@@ -27,8 +63,7 @@ ul, li{
 }
 
 .inventoryItem{
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    padding: 0.5rem;
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;
@@ -71,7 +106,9 @@ footer {
 }
 
 #inventory{
-    /*background-color: #636768;*/
+    background-color: black;
+    padding: 1rem;
+    align-content: center;
 }
 
 #error{

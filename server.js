@@ -8,8 +8,8 @@ const express = require('express'),
     SteamTotp = require("steam-totp"),
     SteamCommunity = require("steamcommunity"),
     community = new SteamCommunity(),
-    client = new SteamUser(),
-    steam = require("./steam.js");
+    client = new SteamUser();
+    // steam = require("./steam.js");
 
 
 // const { check, validationResult } = require('express-validator/check');
@@ -65,26 +65,23 @@ app.get('/inventory/:id', function (req, res, next) {
     if(steamID64regex.test(req.params.id)){
         getInventory(req.params.id).then((inventory) => {
             getProfileDetails(req.params.id).then((profiledetails) => {
-                res.render('index.hbs', {
+                res.render('inventory.hbs', {
                     items: inventory,
                     profiledetails: profiledetails
                 });
             }).catch((err) => {
                 res.render('index.hbs', {
-                    items: [],
-                    error: err
+                    error: "Could not get Steam Profile information,  try again later?"
                 });
             });
         }).catch((err) => {
             res.render('index.hbs', {
-                items: [],
-                error: err
+                error: "Could not get inventory from Steam, try again later?"
             });
         });
     }
     else{
         res.render('index.hbs', {
-            items: [],
             error: 'That is not a valid steam id!'
         });
     }
@@ -333,23 +330,27 @@ function getProfileDetails(steamid){
 }
 
 
-//steam.getInventory('76561198036030455');
-
-
 hbs.registerHelper('getCurrentYear', () =>{
     return new Date().getFullYear()
 });
 
-hbs.registerHelper('screamIt', (text) =>{
-    return text.toUpperCase()
+hbs.registerHelper('getStateClass', (personastate) =>{
+    var stateClass = "online";
+    if(/Offline/i.test(personastate)){
+        stateClass ="offline";
+    }
+    else if(/Online|Busy|Away|Snooze|Looking to trade|Looking to play/i.test(personastate)){
+        stateClass ="online"
+    }
+    else if(/In-game:/i.test(personastate)){
+        stateClass ="ingame"
+    }
+    return stateClass;
 });
 
+
 app.get('/', (req, res) => {
-    res.render('index.hbs', {
-        pageTitle: 'What\'s tradable',
-        currentYear: new Date().getFullYear(),
-        items: 'empty'
-    });
+    res.render('index.hbs', {});
 });
 
 const PORT = process.env.PORT || 8080;
