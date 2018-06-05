@@ -6,12 +6,7 @@
     <meta charset="UTF-8">
     <title>{{profiledetails.personaname}} - What's trade locked?</title>
 
-    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/whatstradelocked.css" rel="stylesheet">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/js/bootstrap/bootstrap.min.js"></script>
-    <script src="/js/whatstradelocked.js"></script>
+    {{> include}}
 
 
 </head>
@@ -21,13 +16,29 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-12 text-center">
-            <div class="profileInfo">
-                <h3 class="profileName {{getStateClass profiledetails.personastate}}">{{profiledetails.personaname}}'s inventory</h3>
-                <div style="display: block">
-                    <a href="{{profiledetails.profileurl}}" target="_blank">
-                        <img src="{{profiledetails.avatar}}" class="avatar {{getStateClass profiledetails.personastate}}" alt="Avatar of {{profiledetails.personaname}}">
-                    </a>
-                    <div class="profileStatus {{getStateClass profiledetails.personastate}}">{{profiledetails.personastate}}</div>
+            <div class="row">
+                <div class="col-lg-4 text-center">
+                    <div id="profileInfo">
+                        <h3 id="profileName" class="{{getStateClass profiledetails.personastate}}">{{profiledetails.personaname}}'s inventory</h3>
+                        <a href="{{profiledetails.profileurl}}" target="_blank">
+                            <img src="{{profiledetails.avatar}}" id="avatar" class="{{getStateClass profiledetails.personastate}}" alt="Avatar of {{profiledetails.personaname}}">
+                        </a>
+                        <div class="{{getStateClass profiledetails.personastate}}">{{profiledetails.personastate}}</div>
+                    </div>
+                </div>
+                <div class="col-lg-8 text-center">
+                    <div id="filters">
+                        <h3>Filters</h3>
+                        <p>Coming soon.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div id="search">
+                        <h3>Search</h3>
+                        <p>Coming soon.</p>
+                    </div>
                 </div>
             </div>
             {{> inventorycontents}}

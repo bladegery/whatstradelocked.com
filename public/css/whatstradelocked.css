@@ -21,14 +21,6 @@ footer{
     }
 }
 
-.avatar{
-    margin: 1rem;
-    border-radius: 10px;
-    border-style: solid;
-    border-width: 0.5rem;
-
-}
-
 .online{
     border-color: #57cbde;
     color: #57cbde;
@@ -42,15 +34,6 @@ footer{
 .ingame{
     border-color: #90ba3c;
     color: #90ba3c;
-}
-
-.profileInfo{
-    text-align: left;
-    padding: 1rem;
-}
-
-.profileStatus{
-    text-align: left;
 }
 
 .nametag{
@@ -105,10 +88,38 @@ footer {
     align-items: center;
 }
 
+#avatar{
+    margin: 1rem;
+    border-radius: 10px;
+    border-style: solid;
+    border-width: 0.5rem;
+
+}
+
+#profileInfo{
+    align-content: left;
+    text-align: center;
+    padding: 1rem;
+    display: block;
+}
+
+#filters{
+    margin: 1rem;
+}
+
+#search{
+    align-content: center;
+    margin: 1rem;
+}
+
 #inventory{
     background-color: black;
     padding: 1rem;
     align-content: center;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #9fcdff;
+    border-width: 3px;
 }
 
 #error{

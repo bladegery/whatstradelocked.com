@@ -49,19 +49,20 @@ app.post("/",function(req,res){
         res.redirect('/inventory/'+steamid);
     }).catch((err) => {
         res.render('index.hbs', {
-            items: [],
             error: err
         });
     });
 });
 
-app.get("/changelog",function(req,res){
-    res.render('changelog.hbs');
+app.get("/", (req, res) => {
+    res.render('index.hbs', {});
 });
 
+app.get("/changelog",function(req,res){
+    res.render('changelog.hbs',{});
+});
 
-
-app.get('/inventory/:id', function (req, res, next) {
+app.get("/inventory/:id", function (req, res, next) {
     if(steamID64regex.test(req.params.id)){
         getInventory(req.params.id).then((inventory) => {
             getProfileDetails(req.params.id).then((profiledetails) => {
@@ -348,10 +349,6 @@ hbs.registerHelper('getStateClass', (personastate) =>{
     return stateClass;
 });
 
-
-app.get('/', (req, res) => {
-    res.render('index.hbs', {});
-});
 
 const PORT = process.env.PORT || 8080;
 

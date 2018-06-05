@@ -6,14 +6,7 @@
     <meta charset="UTF-8">
     <title>What's trade locked?</title>
 
-    <link href="/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/whatstradelocked.css" rel="stylesheet">
-    <link href="/css/etc/lightbox.css" rel="stylesheet">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/js/bootstrap/bootstrap.min.js"></script>
-    <script src="/js/etc/lightbox.js"></script>
-    <script src="/js/whatstradelocked.js"></script>
+    {{> include}}
 
 
 </head>
@@ -30,8 +23,8 @@
             <br>
             <p>Steam profile or trade link: </p>
             <form action="/" method="post">
-                <input id="steam_user_input" type="text" name="steam_user_input" value="">
-                <input type="submit" value="Load inventory">
+                <input id="steam_user_input" type="text" name="steam_user_input" value="" class="form-control" placeholder="Paste here">
+                <button type="submit">Load inventory</button>
             </form>
             <p>Steam profile example: https://steamcommunity.com/id/gergelyszabo/</p>
             <p>Trade link example: https://steamcommunity.com/tradeoffer/new/?partner=75764727&token=tx0asz7q</p>
