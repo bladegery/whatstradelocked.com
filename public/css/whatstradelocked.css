@@ -21,6 +21,66 @@ footer{
     }
 }
 
+.filterWeaponCategory{
+    text-align: left;
+}
+
+.filterIcon{
+    font-family: 'CsgoIcons';
+    font-size: 1.5rem;
+    color: #57cbde;
+    margin: 0;
+    padding: 0;
+
+    /*For zoom*/
+    -webkit-transform: scale(1, 1); /*This is the scale for the normal size of the image.*/
+    -webkit-transition-duration: 500ms;
+    -webkit-transition-timing-function: ease-out;
+
+    /* Webkit for Mozila Firefox */
+    -moz-transform: scale(1, 1);
+    -moz-transition-duration: 500ms;
+    -moz-transition-timing-function: ease-out;
+
+    /* Webkit for IE( Version: 11, 10 ) */
+    -ms-transform: scale(1, 1);
+    -ms-transition-duration: 500ms;
+    -ms-transition-timing-function: ease-out;
+}
+
+/*For zoom*/
+.filterIcon:hover{
+    color: white;
+    /* Webkit for Chrome and Safari */
+    -webkit-transform: scale(1.1, 1.1);  /*This is the enlarged size scale of the image.*/
+    -webkit-transition-duration: 500ms;
+    -webkit-transition-timing-function: ease-out;
+
+    /* Webkit for Mozila Firefox */
+    -moz-transform: scale(1.1, 1.1);
+    -moz-transition-duration: 500ms;
+    -moz-transition-timing-function: ease-out;
+
+    /* Webkit for IE( Version: 11, 10 ) */
+    -ms-transform: scale(1.10, 1.10);
+    -ms-transition-duration: 500ms;
+    -ms-transition-timing-function: ease-out;
+
+}
+
+.animate {
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+
+.clickedIcon{
+    color: white;
+}
+
 .online{
     border-color: #57cbde;
     color: #57cbde;
@@ -54,6 +114,20 @@ footer{
     background-color: black;
     margin: 0.5rem;
 }
+
+.inventoryBuildingBlock{
+    align-content: center;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: #23272b;
+    border-radius: 5px;
+}
+
+.subBlock{
+    background-color: #313435;
+    margin: 2px;
+}
+
 
 .base_grade, .consumer_grade{
     background: rgba(255, 255, 255, .2); !important;
@@ -90,37 +164,39 @@ footer {
 
 #avatar{
     margin: 1rem;
-    border-radius: 10px;
+    border-radius: 2px;
     border-style: solid;
     border-width: 0.5rem;
 
 }
 
+#onPageSearch{
+    width: 80%;
+
+}
+
 #profileInfo{
-    align-content: left;
-    text-align: center;
-    padding: 1rem;
-    display: block;
 }
 
 #filters{
-    margin: 1rem;
 }
 
 #search{
-    align-content: center;
-    margin: 1rem;
 }
 
 #inventory{
-    background-color: black;
-    padding: 1rem;
-    align-content: center;
-    border-radius: 5px;
-    border-style: solid;
-    border-color: #9fcdff;
-    border-width: 3px;
+
 }
+
+
+@font-face {
+    font-family: 'CsgoIcons';
+    src:  url('../fonts/csgo_icons.woff') format('woff'),
+    url('../fonts/csgo_icons.ttf')  format('truetype'),
+    url('../fonts/csgo_icons.svg#csgo_icons') format('svg');
+    /*https://www.unknowncheats.me/forum/cs-go-releases/169881-csgo-weapon-icons-ttf-font.html*/
+}
+
 
 #error{
     color:red;

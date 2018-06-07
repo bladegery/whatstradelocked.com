@@ -68,6 +68,7 @@ app.get("/inventory/:id", function (req, res, next) {
             getProfileDetails(req.params.id).then((profiledetails) => {
                 res.render('inventory.hbs', {
                     items: inventory,
+                    itemCount: inventory.length,
                     profiledetails: profiledetails
                 });
             }).catch((err) => {
@@ -196,6 +197,24 @@ function getInventory(steamid){
                     catch(error) {
                     }
 
+                    var category ="";
+                    try {
+                        if(items[item].tags!==undefined||items[item].tags[0]!==undefined){
+                            category = items[item].tags[0].name;
+                        }
+                    }
+                    catch(error) {
+                    }
+
+                    var weapon ="";
+                    try {
+                        if(items[item].tags!==undefined||items[item].tags[1]!==undefined){
+                            weapon = items[item].tags[1].name;
+                        }
+                    }
+                    catch(error) {
+                    }
+
                     var quality = "stock";
                     if(/Base Grade/i.test(type)){
                         quality ="base_grade";
@@ -258,6 +277,8 @@ function getInventory(steamid){
                     catch(error) {
                     }
 
+                    var keywords = `${name} ${items[item].market_hash_name} ${type} ${nametag} ${quality} ${category} ${weapon.toLowerCase() + name.split('|')[1]}`;
+
 
                     itemsPropertiesToReturn.push({
                         name: name,
@@ -275,6 +296,9 @@ function getInventory(steamid){
                         nametag: nametag,
                         inspectLink: inspectLink,
                         description: description,
+                        keywords: keywords.toLowerCase(),
+                        category: category,
+                        weapon: weapon
                     })
                 }
             }

@@ -1,7 +1,7 @@
-<div id="inventory">
+<div id="inventory" class="inventoryBuildingBlock">
     <div class="row">
         {{#each items}}
-            <div class="inventoryItem col-md-2 {{this.quality}}" id="inventoryItem{{@index}}">
+            <div class="inventoryItem col-md-2 {{this.quality}}" id="inventoryItem{{@index}}" data-keywords="{{this.keywords}}" data-exterior="{{this.exterior}}" data-category="{{this.category}}" data-weapon="{{this.weapon}}">
                 <h5>
                     {{this.name}}
                 </h5>

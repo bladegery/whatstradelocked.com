@@ -18,7 +18,7 @@
         <div class="col-lg-12 text-center">
             <div class="row">
                 <div class="col-lg-4 text-center">
-                    <div id="profileInfo">
+                    <div id="profileInfo" class="inventoryBuildingBlock">
                         <h3 id="profileName" class="{{getStateClass profiledetails.personastate}}">{{profiledetails.personaname}}'s inventory</h3>
                         <a href="{{profiledetails.profileurl}}" target="_blank">
                             <img src="{{profiledetails.avatar}}" id="avatar" class="{{getStateClass profiledetails.personastate}}" alt="Avatar of {{profiledetails.personaname}}">
@@ -27,17 +27,86 @@
                     </div>
                 </div>
                 <div class="col-lg-8 text-center">
-                    <div id="filters">
-                        <h3>Filters</h3>
-                        <p>Coming soon.</p>
+                    <div id="filters" class="inventoryBuildingBlock">
+                        <h3>Filter {{this.itemCount}} items</h3>
+                        <p>More options soon.</p>
+                        <!--<p id="resetFilters">Reset all filters</p>-->
+                        <div class="container subBlock">
+                            <p class="filterWeaponCategory">Knives</p>
+                            <div class="row">
+                                <div class="col filterIcon" data-weapon="Falchion Knife">&#xe200</div>
+                                <div class="col filterIcon" data-weapon="Gut Knife">&#xe1fa</div>
+                                <div class="col filterIcon" data-weapon="Shadow Daggers">&#xe204</div>
+                                <div class="col filterIcon" data-weapon="Flip Knife">&#xe1f9</div>
+                                <div class="col filterIcon" data-weapon="Huntsman Knife">&#xe1fd</div>
+                                <div class="col filterIcon" data-weapon="Bowie Knife">&#xe202</div>
+                                <div class="col filterIcon" data-weapon="Bayonet">&#xe1f4</div>
+                                <div class="col filterIcon" data-weapon="M9 Bayonet">&#xe1fc</div>
+                                <div class="col filterIcon" data-weapon="Butterfly Knife">&#xe203</div>
+                                <div class="col filterIcon" data-weapon="Karambit">&#xe1fb</div>
+                            </div>
+                        </div>
+                        <div class="container subBlock">
+                            <p class="filterWeaponCategory">Rifles</p>
+                            <div class="row">
+                                <div class="col filterIcon" data-weapon="AK-47">&#xe007</div>
+                                <div class="col filterIcon" data-weapon="AUG">&#xe008</div>
+                                <div class="col filterIcon" data-weapon="AWP">&#xe009</div>
+                                <div class="col filterIcon" data-weapon="FAMAS">&#xe00a</div>
+                                <div class="col filterIcon" data-weapon="G3SG1">&#xe00b</div>
+                                <div class="col filterIcon" data-weapon="Galil AR">&#xe00d</div>
+                                <div class="col filterIcon" data-weapon="M4A4">&#xe00e</div>
+                                <div class="col filterIcon" data-weapon="M4A1-S">&#xe010</div>
+                                <div class="col filterIcon" data-weapon="SCAR-20">&#xe026</div>
+                                <div class="col filterIcon" data-weapon="SG 553">&#xe026</div>
+                                <div class="col filterIcon" data-weapon="SSG 08">&#xe028</div>
+                            </div>
+                        </div>
+                        <div class="container subBlock">
+                            <p class="filterWeaponCategory">Pistols</p>
+                            <div class="row">
+                                <div class="col filterIcon" data-weapon="CZ75-Auto">&#xe03f</div>
+                                <div class="col filterIcon" data-weapon="Desert Eagle">&#xe001</div>
+                                <div class="col filterIcon" data-weapon="Dual Berettas">&#xe002</div>
+                                <div class="col filterIcon" data-weapon="Five-Seven">&#xe003</div>
+                                <div class="col filterIcon" data-weapon="Glock-18">&#xe004</div>
+                                <div class="col filterIcon" data-weapon="P2000">&#xe013</div>
+                                <div class="col filterIcon" data-weapon="P250">&#xe020</div>
+                                <div class="col filterIcon" data-weapon="R8 Revolver">&#xe040</div>
+                                <div class="col filterIcon" data-weapon="Tec-9">&#xe01e</div>
+                                <div class="col filterIcon" data-weapon="USP-S">&#xe03d</div>
+                            </div>
+                        </div>
+                        <div class="container subBlock">
+                            <p class="filterWeaponCategory">SMGs</p>
+                            <div class="row">
+                                <div class="col filterIcon" data-weapon="MAC-10">&#xe011</div>
+                                <div class="col filterIcon" data-weapon="MP7">&#xe021</div>
+                                <div class="col filterIcon" data-weapon="MP9">&#xe022</div>
+                                <div class="col filterIcon" data-weapon="PP-Bizon">&#xe01a</div>
+                                <div class="col filterIcon" data-weapon="P90">&#xe024</div>
+                                <div class="col filterIcon" data-weapon="UMP-45">&#xe018</div>
+                            </div>
+                        </div>
+                        <div class="container subBlock">
+                            <p class="filterWeaponCategory">Heavy</p>
+                            <div class="row">
+                                <div class="col filterIcon" data-weapon="MAG-7">&#xe01b</div>
+                                <div class="col filterIcon" data-weapon="Nova">&#xe023</div>
+                                <div class="col filterIcon" data-weapon="Sawed-Off">&#xe01d</div>
+                                <div class="col filterIcon" data-weapon="XM1014">&#xe019</div>
+                                <div class="col filterIcon" data-weapon="M249">&#xe03c</div>
+                                <div class="col filterIcon" data-weapon="Negev">&#xe01c</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <div id="search">
+                    <div id="search" class="inventoryBuildingBlock">
                         <h3>Search</h3>
-                        <p>Coming soon.</p>
+                        <input id="onPageSearch" type="text" placeholder="Search for an item">
                     </div>
                 </div>
             </div>
