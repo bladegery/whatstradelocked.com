@@ -25,6 +25,10 @@ $(document).ready(function(){
     });
 
     $("#resetFilters").on("click", function() {
+        $(".filterIcon").each(function () {
+            $(this).removeClass('clickedIcon');
+        });
+
         $(".inventoryItem").each(function() {
             $(this).show();
         });
@@ -34,59 +38,81 @@ $(document).ready(function(){
         $(this).tooltip();
     });
 
+
     $(".filterIcon").on({
-        mouseenter: function () {
-            $(this).tooltip();
-        },
         click: function() {
-            var filter = $(this);
-            console.log(filter);
-            filter.toggleClass('clickedIcon');
-            var weapon = filter.attr('title');
-            console.log(weapon);
-            // (filtersList[weapon] === 0) ? filtersList[weapon] = 1 : filtersList[weapon] = 0;
+            if ($(this).hasClass('filterWeaponIcon')) {
 
-            $(".inventoryItem").each(function() {
-                let $item = $(this);
-                // console.log($item);
-                // console.log(weapon);
-                // console.log($item.attr("data-weapon"));
-                // console.log($item.attr("data-weapon")!==weapon);
+                let filter = $(this);
+                let weapon = filter.attr('data-weapon');
+                // (filtersList[weapon] === 0) ? filtersList[weapon] = 1 : filtersList[weapon] = 0;
 
-                // $item.toggle($item.attr("data-weapon")!==weapon);
-                if($item.attr("data-weapon")!==weapon){
-                    $item.toggle();
+                $(".inventoryItem").each(function() {
+                    let $item = $(this);
+                    // console.log($item);
+                    // console.log(weapon);
+                    // console.log($item.attr("data-weapon"));
+                    // console.log($item.attr("data-weapon")!==weapon);
+
+                    // $item.toggle($item.attr("data-weapon")!==weapon);
+                    if($item.attr("data-weapon")!==weapon){
+                        $item.toggle();
+                    }
+
+                    // let $item = $(this);
+                    // if($item.attr("data-weapon")===weapon||filtersList[$item.attr("data-weapon")]===1){
+                    //     $item.show();
+                    // }
+                    // else{
+                    //     $item.hide();
+                    // }
+                });
+            }
+            $(this).toggleClass('clickedIcon');
+        }
+    });
+
+    let slider = document.getElementById("lock_time_slider");
+    let output = document.getElementById("daysleft");
+    output.innerHTML = slider.value;
+
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+        let now = new Date().getTime();
+        let days = this.value;
+
+        $( "[data-countdown]" ).each(function() {
+            let $this = $(this);
+
+            if(!($this.attr("data-countdown")==='Tradable')){
+                let countDownDate =  new Date($this.attr("data-countdown"));
+                let distance = countDownDate - now;
+                console.log(countDownDate.getTime());
+                console.log(now);
+                console.log(distance);
+                console.log(days);
+                console.log(days*(1000 * 60 * 60 * 24));
+
+                if (distance < days*(1000 * 60 * 60 * 24)) {
+                    $this.parent().show();
+                    console.log("<");
                 }
-
-                // let $item = $(this);
-                // if($item.attr("data-weapon")===weapon||filtersList[$item.attr("data-weapon")]===1){
-                //     $item.show();
-                // }
-                // else{
-                //     $item.hide();
-                // }
-            });
-        }
-    });
-
-    $( "#lock_time_slider" ).slider({
-        animate: "fast",
-        max: 8,
-        min: 0,
-        value: 8,
-        slide: function( event, ui ) {
-            $( "#tradabilityFilter" ).val(ui.value);
-        }
-    });
-
-    $( "#tradabilityFilter" ).val( "$" + $( "#slider-3" ).slider( "values", 0 ) +
-        " - $" + $( "#slider-3" ).slider( "values", 1 ) );
-
+                else{
+                    console.log(">");
+                    $this.parent().hide();
+                }
+            }
+        });
+    };
 
     $( ".inspect" ).each(function() {
         if($(this).attr("href")===""){
             $(this).hide();
         }
+    });
+
+    $( ".actionIcons" ).each(function() {
+        $(this).tooltip();
     });
 
     $( ".inventoryItem" ).each(function() {

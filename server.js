@@ -140,6 +140,7 @@ function getVanityOrID(steam_url){
 function getInventory(steamid){
     return new Promise((resolve, reject)=>{
         request('https://steamcommunity.com/profiles/' + steamid + '/inventory/json/730/2', (error, response, body) => {
+            try{
             if (response.statusCode === 429) {
                 console.log('Rate limited');
                 reject('Could not get inventory from Steam, try again later?');
@@ -157,9 +158,14 @@ function getInventory(steamid){
                 return;
             }
 
-            let items = JSON.parse(body).rgDescriptions;
-            let ids = JSON.parse(body).rgInventory;
-
+            var items = JSON.parse(body).rgDescriptions;
+            var ids = JSON.parse(body).rgInventory;
+            }
+            catch (error) {
+                console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+                reject('Could not get inventory from Steam, try again later?');
+                return;
+            }
 
             let itemsPropertiesToReturn = [];
 
@@ -315,8 +321,14 @@ function getProfileDetails(steamid){
                 reject({error: 'Could not load steam profile information'});
                 return;
             }
-
-            var player = JSON.parse(body).response.players[0];
+            try {
+                var player = JSON.parse(body).response.players[0];
+            }
+            catch (error) {
+                console.log('Could not load steam profile information');
+                reject({error: 'Could not load steam profile information'});
+                return;
+            }
 
             var personastate = 'Offline';
 

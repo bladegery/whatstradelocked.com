@@ -21,29 +21,49 @@ footer{
     }
 }
 
-.multiFilter{
-    padding: 1rem;
-    /*padding-top: 1rem;*/
-    /*padding-bottom: 1rem;*/
-    /*padding-left: 2rem;*/
-    /*padding-right: 2rem;*/
+.changelogDate{
+    text-align: left;
+    margin: 1rem;
+}
+
+.changelogList{
+    align-content: center;
+}
+
+.actionIcons{
+    color: white;
+    margin: 1rem;
 }
 
 .steamOnlineBlue{
     color: #57cbde;
 }
 
-/*.slider{*/
-    /*position:absolute;*/
-    /*top:50%*/
-/*}*/
-
-.ui-slider-handle{
-    color: #57cbde;
+.slider{
+    -webkit-appearance: none;
+    width: 20%;
+    height: 5px;
+    background: white;
+    outline: none;
+    border-radius: 5px;
 }
 
-.ui-slider{
-    color: white;
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    background: #57cbde;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.slider::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    background: #57cbde;
+    cursor: pointer;
+    border-radius: 50%;
 }
 
 .filterWeaponCategory{
@@ -200,12 +220,12 @@ footer {
 
 }
 
-/*#lock_time_slider{*/
+#lock_time_slider{
     /*padding-top: 1rem;*/
     /*padding-bottom: 1rem;*/
     /*padding-left: 2rem;*/
     /*padding-right: 2rem;*/
-/*}*/
+}
 
 #profileInfo{
 }
