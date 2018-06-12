@@ -30,73 +30,82 @@
                     <div id="filters" class="inventoryBuildingBlock">
                         <h3>Filter {{this.itemCount}} items</h3>
                         <p>More options soon.</p>
-                        <!--<p id="resetFilters">Reset all filters</p>-->
-                        <div class="container subBlock">
-                            <p class="filterWeaponCategory">Knives</p>
-                            <div class="row">
-                                <div class="col filterIcon" data-weapon="Falchion Knife">&#xe200</div>
-                                <div class="col filterIcon" data-weapon="Gut Knife">&#xe1fa</div>
-                                <div class="col filterIcon" data-weapon="Shadow Daggers">&#xe204</div>
-                                <div class="col filterIcon" data-weapon="Flip Knife">&#xe1f9</div>
-                                <div class="col filterIcon" data-weapon="Huntsman Knife">&#xe1fd</div>
-                                <div class="col filterIcon" data-weapon="Bowie Knife">&#xe202</div>
-                                <div class="col filterIcon" data-weapon="Bayonet">&#xe1f4</div>
-                                <div class="col filterIcon" data-weapon="M9 Bayonet">&#xe1fc</div>
-                                <div class="col filterIcon" data-weapon="Butterfly Knife">&#xe203</div>
-                                <div class="col filterIcon" data-weapon="Karambit">&#xe1fb</div>
+                        <!--<i id="resetFilters" class="fa fa-sync fa-2x steamOnlineBlue"></i>-->
+                        <!--<div class="container subBlock multiFilter">-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-lg-1">-->
+                                    <!--<i class="fa fa-clock-o fa-2x steamOnlineBlue" aria-hidden="true"></i>-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-9 slider">-->
+                                    <!--<p>Showing items tradable in:</p>-->
+                                    <!--<div id="lock_time_slider"></div>-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-1">-->
+                                    <!--<i class="fa fa-tags fa-2x steamOnlineBlue"></i>-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-1">-->
+                                    <!--<i class="fa fa-music fa-2x steamOnlineBlue"></i>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="row">
+                            <div class="col">
+                                <p class="filterWeaponCategory">Knives</p>
+                                <div class="container-fluid filterIcon" title="Falchion Knife">&#xe200</div>
+                                <div class="container-fluid filterIcon" title="Gut Knife">&#xe1fa</div>
+                                <div class="container-fluid filterIcon" title="Shadow Daggers">&#xe204</div>
+                                <div class="container-fluid filterIcon" title="Flip Knife">&#xe1f9</div>
+                                <div class="container-fluid filterIcon" title="Huntsman Knife">&#xe1fd</div>
+                                <div class="container-fluid filterIcon" title="Bowie Knife">&#xe202</div>
+                                <div class="container-fluid filterIcon" title="Bayonet">&#xe1f4</div>
+                                <div class="container-fluid filterIcon" title="M9 Bayonet">&#xe1fc</div>
+                                <div class="container-fluid filterIcon" title="Butterfly Knife">&#xe203</div>
+                                <div class="container-fluid filterIcon" title="Karambit">&#xe1fb</div>
                             </div>
-                        </div>
-                        <div class="container subBlock">
-                            <p class="filterWeaponCategory">Rifles</p>
-                            <div class="row">
-                                <div class="col filterIcon" data-weapon="AK-47">&#xe007</div>
-                                <div class="col filterIcon" data-weapon="AUG">&#xe008</div>
-                                <div class="col filterIcon" data-weapon="AWP">&#xe009</div>
-                                <div class="col filterIcon" data-weapon="FAMAS">&#xe00a</div>
-                                <div class="col filterIcon" data-weapon="G3SG1">&#xe00b</div>
-                                <div class="col filterIcon" data-weapon="Galil AR">&#xe00d</div>
-                                <div class="col filterIcon" data-weapon="M4A4">&#xe00e</div>
-                                <div class="col filterIcon" data-weapon="M4A1-S">&#xe010</div>
-                                <div class="col filterIcon" data-weapon="SCAR-20">&#xe026</div>
-                                <div class="col filterIcon" data-weapon="SG 553">&#xe026</div>
-                                <div class="col filterIcon" data-weapon="SSG 08">&#xe028</div>
+                            <div class="col">
+                                <p class="filterWeaponCategory">Rifles</p>
+                                <div class="container-fluid filterIcon" title="AK-47">&#xe007</div>
+                                <div class="container-fluid filterIcon" title="AUG">&#xe008</div>
+                                <div class="container-fluid filterIcon" title="AWP">&#xe009</div>
+                                <div class="container-fluid filterIcon" title="FAMAS">&#xe00a</div>
+                                <div class="container-fluid filterIcon" title="G3SG1">&#xe00b</div>
+                                <div class="container-fluid filterIcon" title="Galil AR">&#xe00d</div>
+                                <div class="container-fluid filterIcon" title="M4A4">&#xe00e</div>
+                                <div class="container-fluid filterIcon" title="M4A1-S">&#xe010</div>
+                                <div class="container-fluid filterIcon" title="SCAR-20">&#xe026</div>
+                                <div class="container-fluid filterIcon" title="SG 553">&#xe00b</div>
+                                <div class="container-fluid filterIcon" title="SSG 08">&#xe028</div>
                             </div>
-                        </div>
-                        <div class="container subBlock">
-                            <p class="filterWeaponCategory">Pistols</p>
-                            <div class="row">
-                                <div class="col filterIcon" data-weapon="CZ75-Auto">&#xe03f</div>
-                                <div class="col filterIcon" data-weapon="Desert Eagle">&#xe001</div>
-                                <div class="col filterIcon" data-weapon="Dual Berettas">&#xe002</div>
-                                <div class="col filterIcon" data-weapon="Five-Seven">&#xe003</div>
-                                <div class="col filterIcon" data-weapon="Glock-18">&#xe004</div>
-                                <div class="col filterIcon" data-weapon="P2000">&#xe013</div>
-                                <div class="col filterIcon" data-weapon="P250">&#xe020</div>
-                                <div class="col filterIcon" data-weapon="R8 Revolver">&#xe040</div>
-                                <div class="col filterIcon" data-weapon="Tec-9">&#xe01e</div>
-                                <div class="col filterIcon" data-weapon="USP-S">&#xe03d</div>
+                            <div class="col">
+                                <p class="filterWeaponCategory">Pistols</p>
+                                <div class="container-fluid filterIcon" title="CZ75-Auto">&#xe03f</div>
+                                <div class="container-fluid filterIcon" title="Desert Eagle">&#xe001</div>
+                                <div class="container-fluid filterIcon" title="Dual Berettas">&#xe002</div>
+                                <div class="container-fluid filterIcon" title="Five-Seven">&#xe003</div>
+                                <div class="container-fluid filterIcon" title="Glock-18">&#xe004</div>
+                                <div class="container-fluid filterIcon" title="P2000">&#xe013</div>
+                                <div class="container-fluid filterIcon" title="P250">&#xe020</div>
+                                <div class="container-fluid filterIcon" title="R8 Revolver">&#xe040</div>
+                                <div class="container-fluid filterIcon" title="Tec-9">&#xe01e</div>
+                                <div class="container-fluid filterIcon" title="USP-S">&#xe03d</div>
                             </div>
-                        </div>
-                        <div class="container subBlock">
-                            <p class="filterWeaponCategory">SMGs</p>
-                            <div class="row">
-                                <div class="col filterIcon" data-weapon="MAC-10">&#xe011</div>
-                                <div class="col filterIcon" data-weapon="MP7">&#xe021</div>
-                                <div class="col filterIcon" data-weapon="MP9">&#xe022</div>
-                                <div class="col filterIcon" data-weapon="PP-Bizon">&#xe01a</div>
-                                <div class="col filterIcon" data-weapon="P90">&#xe024</div>
-                                <div class="col filterIcon" data-weapon="UMP-45">&#xe018</div>
+                            <div class="col">
+                                <p class="filterWeaponCategory">SMGs</p>
+                                <div class="container-fluid filterIcon" title="MAC-10">&#xe011</div>
+                                <div class="container-fluid filterIcon" title="MP7">&#xe021</div>
+                                <div class="container-fluid filterIcon" title="MP9">&#xe022</div>
+                                <div class="container-fluid filterIcon" title="PP-Bizon">&#xe01a</div>
+                                <div class="container-fluid filterIcon" title="P90">&#xe024</div>
+                                <div class="container-fluid filterIcon" title="UMP-45">&#xe018</div>
                             </div>
-                        </div>
-                        <div class="container subBlock">
-                            <p class="filterWeaponCategory">Heavy</p>
-                            <div class="row">
-                                <div class="col filterIcon" data-weapon="MAG-7">&#xe01b</div>
-                                <div class="col filterIcon" data-weapon="Nova">&#xe023</div>
-                                <div class="col filterIcon" data-weapon="Sawed-Off">&#xe01d</div>
-                                <div class="col filterIcon" data-weapon="XM1014">&#xe019</div>
-                                <div class="col filterIcon" data-weapon="M249">&#xe03c</div>
-                                <div class="col filterIcon" data-weapon="Negev">&#xe01c</div>
+                            <div class="col">
+                                <p class="filterWeaponCategory">Heavy</p>
+                                <div class="container-fluid filterIcon" title="MAG-7">&#xe01b</div>
+                                <div class="container-fluid filterIcon" title="Nova">&#xe023</div>
+                                <div class="container-fluid filterIcon" title="Sawed-Off">&#xe01d</div>
+                                <div class="container-fluid filterIcon" title="XM1014">&#xe019</div>
+                                <div class="container-fluid filterIcon" title="M249">&#xe03c</div>
+                                <div class="container-fluid filterIcon" title="Negev">&#xe01c</div>
                             </div>
                         </div>
                     </div>

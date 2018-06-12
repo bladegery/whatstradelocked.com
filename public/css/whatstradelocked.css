@@ -21,8 +21,33 @@ footer{
     }
 }
 
+.multiFilter{
+    padding: 1rem;
+    /*padding-top: 1rem;*/
+    /*padding-bottom: 1rem;*/
+    /*padding-left: 2rem;*/
+    /*padding-right: 2rem;*/
+}
+
+.steamOnlineBlue{
+    color: #57cbde;
+}
+
+/*.slider{*/
+    /*position:absolute;*/
+    /*top:50%*/
+/*}*/
+
+.ui-slider-handle{
+    color: #57cbde;
+}
+
+.ui-slider{
+    color: white;
+}
+
 .filterWeaponCategory{
-    text-align: left;
+    text-align: center;
 }
 
 .filterIcon{
@@ -174,6 +199,13 @@ footer {
     width: 80%;
 
 }
+
+/*#lock_time_slider{*/
+    /*padding-top: 1rem;*/
+    /*padding-bottom: 1rem;*/
+    /*padding-left: 2rem;*/
+    /*padding-right: 2rem;*/
+/*}*/
 
 #profileInfo{
 }

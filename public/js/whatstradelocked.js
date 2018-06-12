@@ -16,6 +16,7 @@ $(document).ready(function(){
     //
     // };
 
+
     $("#onPageSearch").on("keyup", function() {
         var value = $(this).val().toLowerCase();
         $(".inventoryItem").filter(function() {
@@ -29,32 +30,57 @@ $(document).ready(function(){
         });
     });
 
-    $(".filterIcon").on("click", function() {
-        $(this).toggleClass('clickedIcon');
-        var weapon = $(this).attr("data-weapon");
-        // (filtersList[weapon] === 0) ? filtersList[weapon] = 1 : filtersList[weapon] = 0;
-
-        $(".inventoryItem").each(function() {
-            let $item = $(this);
-            console.log($item);
-            console.log(weapon);
-            console.log($item.attr("data-weapon"));
-            console.log($item.attr("data-weapon")!==weapon);
-
-            // $item.toggle($item.attr("data-weapon")!==weapon);
-            if($item.attr("data-weapon")!==weapon){
-                $item.toggle();
-            }
-
-            // let $item = $(this);
-            // if($item.attr("data-weapon")===weapon||filtersList[$item.attr("data-weapon")]===1){
-            //     $item.show();
-            // }
-            // else{
-            //     $item.hide();
-            // }
-        });
+    $(".filterIcon").each(function () {
+        $(this).tooltip();
     });
+
+    $(".filterIcon").on({
+        mouseenter: function () {
+            $(this).tooltip();
+        },
+        click: function() {
+            var filter = $(this);
+            console.log(filter);
+            filter.toggleClass('clickedIcon');
+            var weapon = filter.attr('title');
+            console.log(weapon);
+            // (filtersList[weapon] === 0) ? filtersList[weapon] = 1 : filtersList[weapon] = 0;
+
+            $(".inventoryItem").each(function() {
+                let $item = $(this);
+                // console.log($item);
+                // console.log(weapon);
+                // console.log($item.attr("data-weapon"));
+                // console.log($item.attr("data-weapon")!==weapon);
+
+                // $item.toggle($item.attr("data-weapon")!==weapon);
+                if($item.attr("data-weapon")!==weapon){
+                    $item.toggle();
+                }
+
+                // let $item = $(this);
+                // if($item.attr("data-weapon")===weapon||filtersList[$item.attr("data-weapon")]===1){
+                //     $item.show();
+                // }
+                // else{
+                //     $item.hide();
+                // }
+            });
+        }
+    });
+
+    $( "#lock_time_slider" ).slider({
+        animate: "fast",
+        max: 8,
+        min: 0,
+        value: 8,
+        slide: function( event, ui ) {
+            $( "#tradabilityFilter" ).val(ui.value);
+        }
+    });
+
+    $( "#tradabilityFilter" ).val( "$" + $( "#slider-3" ).slider( "values", 0 ) +
+        " - $" + $( "#slider-3" ).slider( "values", 1 ) );
 
 
     $( ".inspect" ).each(function() {
