@@ -217,28 +217,15 @@ footer {
 
 #onPageSearch{
     width: 80%;
+    background-color: #1d2124;
+    color: white;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-color: #1d2124;;
+    border-radius: 4px;
 
 }
 
-#lock_time_slider{
-    /*padding-top: 1rem;*/
-    /*padding-bottom: 1rem;*/
-    /*padding-left: 2rem;*/
-    /*padding-right: 2rem;*/
-}
-
-#profileInfo{
-}
-
-#filters{
-}
-
-#search{
-}
-
-#inventory{
-
-}
 
 
 @font-face {

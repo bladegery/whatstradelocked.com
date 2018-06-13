@@ -24,6 +24,24 @@
                             <img src="{{profiledetails.avatar}}" id="avatar" class="{{getStateClass profiledetails.personastate}}" alt="Avatar of {{profiledetails.personaname}}">
                         </a>
                         <div class="{{getStateClass profiledetails.personastate}}">{{profiledetails.personastate}}</div>
+                        <div class="row">
+                            <div class="col-8">
+                            </div>
+                            <div class="col-2">
+                                <a href="{{profiledetails.profileurl}}" target="_blank">
+                                    <div class="filterIcon" title="Steam Profile">
+                                        <i class="fab fa-steam"></i>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-2">
+                                <a href="{{profiledetails.steamRepProfile}}" target="_blank">
+                                    <div class="filterIcon" title="SteamRep Profile">
+                                        <i class="fas fa-plus-square"></i>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-8 text-center">
@@ -32,14 +50,29 @@
                         <div class="container">
                             <div class="row">
                                 <div id="resetFilters" class="filterIcon col-lg-1 steamOnlineBlue" data-weapon="" title="Reset all filters">
-                                    <i class="fas fa-sync"></i>
+                                    <i class="fas fa-undo"></i>
                                 </div>
                                 <div class="col-lg-11">
                                     <p>Showing items tradable in <span id="daysleft"></span> days or less</p>
                                     <input type="range" min="0" max="8" step="1" value="8" class="slider" id="lock_time_slider">
                                 </div>
                             </div>
-                            <input id="onPageSearch" type="text" placeholder="Search for an item">
+                            <!--<input id="onPageSearch" type="text" placeholder="Search for an item in this inventory">-->
+                        </div>
+                        <div class="row">
+                            <div class="col-1">
+                                <div id="nametagFilter" class="filterIcon" title="Nametag">
+                                    <i class="fas fa-tags"></i>
+                                </div>
+                            </div>
+                            <div class="col-1">
+                                <div id="statTrakFilter" class="filterIcon" title="StatTrak™">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <input id="onPageSearch" type="text" placeholder="Search for an item in this inventory">
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col">
@@ -91,8 +124,14 @@
                                 <div class="container-fluid filterIcon filterWeaponIcon" data-weapon="P90" title="P90">&#xe024</div>
                                 <div class="container-fluid filterIcon filterWeaponIcon" data-weapon="UMP-45" title="UMP-45">&#xe018</div>
                                 <div class="container-fluid"><br></div>
-                                <!--<div class="container-fluid filterIcon" title="Nametag">-->
-                                    <!--<i class="fas fa-tags"></i>-->
+                                <!--<div class="container-fluid filterIcon" title="Pin">-->
+                                    <!--<i class="fas fa-thumbtack"></i>-->
+                                <!--</div>-->
+                                <!--<div class="container-fluid filterIcon" title="Key">-->
+                                    <!--<i class="fas fa-key"></i>-->
+                                <!--</div>-->
+                                <!--<div class="container-fluid filterIcon" title="Gloves">-->
+                                    <!--<i class="fas fa-american-sign-language-interpreting"></i>-->
                                 <!--</div>-->
                             </div>
                             <div class="col">
@@ -107,23 +146,21 @@
                                 <!--<div class="container-fluid filterIcon" title="Music Kit">-->
                                     <!--<i class="fas fa-music"></i>-->
                                 <!--</div>-->
+                                <!--<div class="container-fluid filterIcon" title="Graffiti">-->
+                                    <!--<i class="fas fa-paint-brush"></i>-->
+                                <!--</div>-->
+                                <!--<div class="container-fluid filterIcon" title="Weapon Case">-->
+                                    <!--<i class="fas fa-box"></i>-->
+                                <!--</div>-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!--<div class="row">-->
-                <!--<div class="col-lg-12 text-center">-->
-                    <!--<div id="search" class="inventoryBuildingBlock">-->
-                        <!--<h3>Search</h3>-->
-                        <!--<input id="onPageSearch" type="text" placeholder="Search for an item">-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            {{> inventorycontents}}
         </div>
     </div>
 </div>
+{{> inventorycontents}}
 
 {{> footer}}
 </body>

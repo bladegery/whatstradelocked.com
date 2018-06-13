@@ -34,6 +34,22 @@ $(document).ready(function(){
         });
     });
 
+    $("#nametagFilter").on("click", function() {
+        $(".inventoryItem").each(function() {
+            if($(this).attr("data-nametag")===""){
+                $(this).toggle();
+            }
+        });
+    });
+
+    $("#statTrakFilter").on("click", function() {
+        $(".inventoryItem").each(function() {
+            if(!(/StatTrak™/.test($(this).attr("data-name")))){
+                $(this).toggle();
+            }
+        });
+    });
+
     $(".filterIcon").each(function () {
         $(this).tooltip();
     });

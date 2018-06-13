@@ -16,7 +16,7 @@ const express = require('express'),
 // const { matchedData, sanitize } = require('express-validator/filter');
 
 const steam_static_image_url = 'https://steamcommunity-a.akamaihd.net/economy/image/',
-    iconSize = '/96fx96f', //can switch number to 128, 256, etc. for larger or 32, etc. for smaller
+    iconSize = '/256fx256f', //can switch number to 128, 256, etc. for larger or 32, etc. for smaller
     steamAPIKey = '083D3F215CEFFEE1911D32AC211B2B85',
     steamCommunityRegex = new RegExp('steamcommunity.com/id/|steamcommunity.com/profiles/|steamcommunity.com/tradeoffer/new/\\?partner='),
     steamID64regex = new RegExp('[0-9]{17}');
@@ -351,6 +351,8 @@ function getProfileDetails(steamid){
             catch(error) {
             }
 
+            let steamRepProfile = 'https://steamrep.com/profiles/'+steamid;
+
             resolve({
                 error: 0,
                 personaname: player.personaname,
@@ -361,6 +363,7 @@ function getProfileDetails(steamid){
                 lastlogoff: player.lastlogoff,
                 timecreated: player.timecreated,
                 country: player.loccountrycode,
+                steamRepProfile: steamRepProfile
             });
         });
     });
