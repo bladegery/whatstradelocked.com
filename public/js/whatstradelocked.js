@@ -1,20 +1,59 @@
 
 $(document).ready(function(){
 
-    // var filtersList ={
-    //     'Falchion Knife': 0,
-    //     'Gut Knife': 0,
-    //     'Shadow Daggers': 0,
-    //     'Flip Knife': 0,
-    //     'Huntsman Knife': 0,
-    //     'Bowie Knife': 0,
-    //     'Bayonet': 0,
-    //     'M9 bayonet': 0,
-    //     'Butterfly Knife': 0,
-    //     'Karambit': 0,
-    //
-    //
-    // };
+    var filters ={
+        filter: 0,
+        nametag: 0,
+        stattrak: 0,
+        time: 0
+    };
+
+    var weaponFilters ={
+        filter: 0,
+        'Falchion Knife': 0,
+        'Gut Knife': 0,
+        'Shadow Daggers': 0,
+        'Flip Knife': 0,
+        'Huntsman Knife': 0,
+        'Bowie Knife': 0,
+        'Bayonet': 0,
+        'M9 Bayonet': 0,
+        'Butterfly Knife': 0,
+        'Karambit': 0,
+        'AK-47': 0,
+        'AUG': 0,
+        'AWP': 0,
+        'FAMAS': 0,
+        'G3SG1': 0,
+        'Galil AR': 0,
+        'M4A4': 0,
+        'M4A1-S': 0,
+        'SCAR-20': 0,
+        'SG 553': 0,
+        'SSG 08': 0,
+        'CZ75-Auto': 0,
+        'Desert Eagle': 0,
+        'Dual Berettas': 0,
+        'Five-SeveN': 0,
+        'Glock-18': 0,
+        'P2000': 0,
+        'P250': 0,
+        'R8 Revolver': 0,
+        'Tec-9': 0,
+        'USP-S': 0,
+        'MAC-10': 0,
+        'MP7': 0,
+        'PP-Bizon': 0,
+        'P90': 0,
+        'MAG-7': 0,
+        'Nova': 0,
+        'Sawed-Off': 0,
+        'XM1014': 0,
+        'M249': 0,
+        'Negev': 0,
+        'UMP-45': 0,
+    };
+
 
 
     $("#onPageSearch").on("keyup", function() {
@@ -28,98 +67,56 @@ $(document).ready(function(){
         $(".filterIcon").each(function () {
             $(this).removeClass('clickedIcon');
         });
-
-        $(".inventoryItem").each(function() {
-            $(this).show();
-        });
+        removeFilters();
     });
 
     $("#nametagFilter").on("click", function() {
-        $(".inventoryItem").each(function() {
-            if($(this).attr("data-nametag")===""){
-                $(this).toggle();
-            }
-        });
+        if(filters.nametag===0){
+            filters.nametag=1;
+            filters.filter=filters.filter+1;
+        }
+        else{
+            filters.nametag=0;
+            filters.filter=filters.filter-1;
+        }
+        needfilters();
     });
 
     $("#statTrakFilter").on("click", function() {
-        $(".inventoryItem").each(function() {
-            if(!(/StatTrak™/.test($(this).attr("data-name")))){
-                $(this).toggle();
-            }
-        });
+        if(filters.stattrak===0){
+            filters.stattrak=1;
+            filters.filter=filters.filter+1;
+        }
+        else{
+            filters.stattrak=0;
+            filters.filter=filters.filter-1;
+        }
+        needfilters();
     });
 
     $(".filterIcon").each(function () {
         $(this).tooltip();
     });
 
-
     $(".filterIcon").on({
         click: function() {
+            var filter = $(this);
             if ($(this).hasClass('filterWeaponIcon')) {
-
-                let filter = $(this);
                 let weapon = filter.attr('data-weapon');
-                // (filtersList[weapon] === 0) ? filtersList[weapon] = 1 : filtersList[weapon] = 0;
 
-                $(".inventoryItem").each(function() {
-                    let $item = $(this);
-                    // console.log($item);
-                    // console.log(weapon);
-                    // console.log($item.attr("data-weapon"));
-                    // console.log($item.attr("data-weapon")!==weapon);
-
-                    // $item.toggle($item.attr("data-weapon")!==weapon);
-                    if($item.attr("data-weapon")!==weapon){
-                        $item.toggle();
-                    }
-
-                    // let $item = $(this);
-                    // if($item.attr("data-weapon")===weapon||filtersList[$item.attr("data-weapon")]===1){
-                    //     $item.show();
-                    // }
-                    // else{
-                    //     $item.hide();
-                    // }
-                });
+                if(weaponFilters[weapon] === 0){
+                    weaponFilters[weapon] = 1;
+                    weaponFilters.filter=weaponFilters.filter+1;
+                }
+                else{
+                    weaponFilters[weapon] = 0;
+                    weaponFilters.filter=weaponFilters.filter-1;
+                }
+                needfilters();
             }
             $(this).toggleClass('clickedIcon');
         }
     });
-
-    let slider = document.getElementById("lock_time_slider");
-    let output = document.getElementById("daysleft");
-    output.innerHTML = slider.value;
-
-    slider.oninput = function() {
-        output.innerHTML = this.value;
-        let now = new Date().getTime();
-        let days = this.value;
-
-        $( "[data-countdown]" ).each(function() {
-            let $this = $(this);
-
-            if(!($this.attr("data-countdown")==='Tradable')){
-                let countDownDate =  new Date($this.attr("data-countdown"));
-                let distance = countDownDate - now;
-                console.log(countDownDate.getTime());
-                console.log(now);
-                console.log(distance);
-                console.log(days);
-                console.log(days*(1000 * 60 * 60 * 24));
-
-                if (distance < days*(1000 * 60 * 60 * 24)) {
-                    $this.parent().show();
-                    console.log("<");
-                }
-                else{
-                    console.log(">");
-                    $this.parent().hide();
-                }
-            }
-        });
-    };
 
     $( ".inspect" ).each(function() {
         if($(this).attr("href")===""){
@@ -163,4 +160,123 @@ $(document).ready(function(){
             }, 1000);
         }
     });
+
+
+
+    let slider = document.getElementById("lock_time_slider");
+    let output = document.getElementById("daysleft");
+    output.innerHTML = slider.value;
+
+    slider.oninput = function() {
+        output.innerHTML = this.value;
+        let now = new Date().getTime();
+        let days = this.value;
+
+        if(days>=8){
+            filters.time=0;
+        }
+
+        $( "[data-countdown]" ).each(function() {
+            let $this = $(this);
+
+            if(!($this.attr("data-countdown")==='Tradable')){
+                let countDownDate =  new Date($this.attr("data-countdown"));
+                let distance = countDownDate - now;
+
+                if (distance < days*(1000 * 60 * 60 * 24)) {
+                    $this.parent().show();
+                }
+                else{
+                    $this.parent().hide();
+                }
+            }
+        });
+        filters.time=filters.time+1;
+        applyFilters();
+    };
+
+    function removeFilters(){
+        $(".inventoryItem").each(function() {
+            $(this).show();
+        });
+
+        for (var weap in weaponFilters) {
+            if (!weaponFilters.hasOwnProperty(weap)) {
+                continue;
+            }
+            weaponFilters[weap]=0;
+        }
+
+        for (var filter in filters) {
+            if (!filters.hasOwnProperty(filter)) {
+                continue;
+            }
+            filters[filter]=0;
+        }
+        slider.value=8;
+    }
+
+
+    function applyFilters() {
+        $(".inventoryItem").each(function() {
+            $item = $(this);
+
+            if(weaponFilters.filter===0){
+
+                if(filters.time>0&&$item.css('display') === 'none') {
+                    $item.hide();
+                }
+                else{
+                    $item.show();
+                }
+
+                if (filters.nametag === 1) {
+                    if ($item.attr("data-nametag") === "") {
+                        $item.hide();
+                    }
+                }
+                if (filters.stattrak === 1) {
+                    if (!(/StatTrak™/.test($item.attr("data-name")))) {
+                        $item.hide();
+                    }
+                }
+            }
+            else{
+                if((weaponFilters[$item.attr("data-weapon")]===1)){
+                    if(filters.time>0&&$item.css('display') === 'none'){
+                        $item.hide();
+                    }
+                    else{
+                        $item.show();
+                    }
+
+                    if(filters.nametag===1){
+                        if($item.attr("data-nametag")===""){
+                            $item.hide();
+                        }
+                    }
+                    if(filters.stattrak===1) {
+                        if (!(/StatTrak™/.test($item.attr("data-name")))) {
+                            $item.hide();
+                        }
+                    }
+
+                }
+                else{
+                    $item.hide();
+                }
+            }
+        });
+    }
+
+    function needfilters() {
+        console.log(weaponFilters);
+        console.log(filters);
+        if(filters.filter===0&&weaponFilters.filter===0){
+            removeFilters();
+        }
+        else{
+            applyFilters();
+        }
+    }
 });
