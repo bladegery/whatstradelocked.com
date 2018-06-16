@@ -1,22 +1,21 @@
 <div id="inventory" class="inventoryBuildingBlock">
     <div class="row">
         {{#each items}}
-            <div class="inventoryItem col {{this.quality}}" id="inventoryItem{{@index}}" data-name="{{this.name}}" data-keywords="{{this.keywords}}" data-exterior="{{this.exterior}}" data-category="{{this.category}}" data-weapon="{{this.weapon}}" data-nametag="{{this.nametag}}">
-                <h5>
+            <div class="inventoryItem col-xs-1 pull-left {{this.quality}}" id="inventoryItem{{@index}}" data-name="{{this.name}}" data-keywords="{{this.keywords}}" data-weapon="{{this.weapon}}" data-nametag="{{this.nametag}}">
+                <h5 class="itemName" title="{{this.name}}">
                     {{this.name}}
                 </h5>
-                <p>{{this.exterior}}</p>
-                    <img src="{{this.icon}}" alt="{{this.name}}">
-                <p>
-                    <a class="actionIcons inspect" href="{{this.inspectLink}}"><i class="far fa-eye 2-x" aria-hidden="true" title="Inspect in-game"></i></a>
-                    <a class="actionIcons" target="_blank" href="{{this.marketlink}}"><i class="fas fa-chart-line 2-x" aria-hidden="true" title="Check price on Market"></i></a>
-                </p>
-                <p class="nametag">
-                    {{this.nametag}}
-                </p>
-                <p class = "tradability">
-                    {{this.tradability}}
-                </p>
+                <div class="itemImageContainer">
+                    <img class="itemImage" src="{{this.icon}}" alt="{{this.name}}">
+                    <div class="exterior" title="Exterior: {{this.exterior}}">{{this.exterior}}</div>
+                    <div class="nametag" title="Tagged: {{this.nametag}}">{{this.nametag}}</div>
+                    <div class="statTrak" title="StatTrak™" data-name="{{this.name}}"></div>
+                    <div class="iconsUnderItemImage">
+                        <a class="actionIcons inspect" href="{{this.inspectLink}}"><i class="far fa-eye 2-x" aria-hidden="true" title="Inspect in-game"></i></a>
+                        <a class="actionIcons" target="_blank" href="{{this.marketlink}}"><i class="fas fa-chart-line 2-x" aria-hidden="true" title="Check price on Market"></i></a>
+                        <span class="actionIcons tradabilityIcon" data-tradability="{{this.tradability}}"><i class="fas {{getTradabilityIcon this.tradability}} 2-x" aria-hidden="true" title="{{this.tradability}}"></i></span>
+                    </div>
+                </div>
                 <div class="countdown" data-countdown="{{this.tradability}}"></div>
             </div>
         {{/each}}

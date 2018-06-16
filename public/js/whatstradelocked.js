@@ -52,14 +52,22 @@ $(document).ready(function(){
         'M249': 0,
         'Negev': 0,
         'UMP-45': 0,
+        'Key': 0,
+        'Gloves': 0,
+        'Case': 0,
+        'Pin': 0,
+        'Music Kit': 0,
+        'Graffiti': 0,
+
     };
 
-
-
     $("#onPageSearch").on("keyup", function() {
+        needfilters();
         var value = $(this).val().toLowerCase();
         $(".inventoryItem").filter(function() {
-            $(this).toggle($(this).attr("data-keywords").toLowerCase().indexOf(value) > -1)
+            if($(this).css('display') !== 'none'){
+                $(this).toggle($(this).attr("data-keywords").toLowerCase().indexOf(value) > -1)
+            }
         });
     });
 
@@ -128,13 +136,6 @@ $(document).ready(function(){
         $(this).tooltip();
     });
 
-    $( ".inventoryItem" ).each(function() {
-        let $item = $(this);
-        if($(this).children(".countdown").attr("data-countdown")!=="Tradable"){
-            $item.css("border-color", "red");
-        }
-    });
-
     $( "[data-countdown]" ).each(function() {
         let $this = $(this);
 
@@ -161,6 +162,25 @@ $(document).ready(function(){
         }
     });
 
+    $( ".itemName" ).each(function() {
+        $itemName = $(this);
+
+        var name = $itemName.text().split("| ")[1];
+        $itemName.text(name);
+        $itemName.tooltip();
+    });
+
+    $( ".statTrak" ).each(function() {
+        var itemName = $(this).attr("data-name");
+
+        if(/StatTrak™/.test(itemName)){
+            $(this).text("StatTrak™")
+        }
+    });
+
+    $( ".exterior" ).each(function() {
+        $(this).tooltip();
+    });
 
 
     let slider = document.getElementById("lock_time_slider");
@@ -215,7 +235,6 @@ $(document).ready(function(){
         }
         slider.value=8;
     }
-
 
     function applyFilters() {
         $(".inventoryItem").each(function() {

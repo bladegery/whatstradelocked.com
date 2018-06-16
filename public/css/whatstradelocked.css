@@ -142,22 +142,40 @@ footer{
 }
 
 .nametag{
-    font-size: 0.7em;
+    position: absolute;
+    left: 40%;
+    top: 15%;
+    font-size: 0.8em;
     color: #9fcdff;
 }
 
+.exterior{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    color: white;
+}
+
+.statTrak{
+    color: rgb(207, 106, 50);
+    position: absolute;
+    right: 0px;
+    bottom: 25px;
+}
+
 .countdown{
+    margin-top: 0.5rem;
     color:red;
+    text-align: center;
 }
 
 .inventoryItem{
     padding: 0.5rem;
-    border-radius: 5px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: lawngreen;
-    background-color: black;
-    margin: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 276px;
 }
 
 .inventoryBuildingBlock{
@@ -165,12 +183,27 @@ footer{
     margin: 1rem;
     padding: 1rem;
     background-color: #23272b;
-    border-radius: 5px;
 }
 
 .subBlock{
     background-color: #313435;
     margin: 2px;
+}
+
+.itemImage{
+    width: 256px;
+    height: 256px;
+}
+
+.itemImageContainer{
+    text-align: center;
+    position: relative;
+}
+
+.iconsUnderItemImage{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
 }
 
 
@@ -209,9 +242,8 @@ footer {
 
 #avatar{
     margin: 1rem;
-    border-radius: 2px;
-    border-style: solid;
-    border-width: 0.5rem;
+    border-bottom: solid;
+    border-width: 0.3rem;
 
 }
 
@@ -222,8 +254,16 @@ footer {
     margin: 0.5rem;
     padding: 0.5rem;
     border-color: #1d2124;;
-    border-radius: 4px;
 
+}
+
+#inventory{
+    margin-top: 0;
+}
+
+
+#error{
+    color:red;
 }
 
 
@@ -234,11 +274,6 @@ footer {
     url('../fonts/csgo_icons.ttf')  format('truetype'),
     url('../fonts/csgo_icons.svg#csgo_icons') format('svg');
     /*https://www.unknowncheats.me/forum/cs-go-releases/169881-csgo-weapon-icons-ttf-font.html*/
-}
-
-
-#error{
-    color:red;
 }
 
 

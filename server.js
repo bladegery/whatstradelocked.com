@@ -40,6 +40,9 @@ app.use((req, res, next) =>{
 
 //TODO:
 //sanitize input fields before adding database
+//show unmarketable items
+//stack multiples - keys
+//sorting
 
 app.post("/",function(req,res){
     // sanitize(req.body.steam_user_input).trim().escape()=>{
@@ -216,6 +219,25 @@ function getInventory(steamid){
                     try {
                         if(items[item].tags!==undefined||items[item].tags[1]!==undefined){
                             weapon = items[item].tags[1].name;
+
+                            if(category==="Key"){
+                                weapon="Key";
+                            }
+                            if(category==="Gloves"){
+                                weapon="Gloves";
+                            }
+                            if(category==="Music Kit"){
+                                weapon="Music Kit";
+                            }
+                            if(category==="Graffiti"){
+                                weapon="Graffiti";
+                            }
+                            if(category==="Container"){
+                                weapon="Case";
+                            }
+                            if(category==="Collectible"){
+                                weapon="Pin";
+                            }
                         }
                     }
                     catch(error) {
@@ -386,6 +408,15 @@ hbs.registerHelper('getStateClass', (personastate) =>{
         stateClass ="ingame"
     }
     return stateClass;
+});
+
+
+hbs.registerHelper('getTradabilityIcon', (tradability) =>{
+    var tradabilityIcon = "fa-check";
+    if(tradability!=="Tradable"){
+        tradabilityIcon ="fa-ban";
+    }
+    return tradabilityIcon;
 });
 
 
