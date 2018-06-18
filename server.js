@@ -9,7 +9,7 @@ const express = require('express'),
     SteamCommunity = require("steamcommunity"),
     community = new SteamCommunity(),
     client = new SteamUser();
-    // steam = require("./steam.js");
+// steam = require("./steam.js");
 
 
 // const { check, validationResult } = require('express-validator/check');
@@ -40,8 +40,6 @@ app.use((req, res, next) =>{
 
 //TODO:
 //sanitize input fields before adding database
-//show unmarketable items
-//stack multiples - keys
 //sorting
 
 app.post("/",function(req,res){
@@ -144,25 +142,25 @@ function getInventory(steamid){
     return new Promise((resolve, reject)=>{
         request('https://steamcommunity.com/profiles/' + steamid + '/inventory/json/730/2', (error, response, body) => {
             try{
-            if (response.statusCode === 429) {
-                console.log('Rate limited');
-                reject('Could not get inventory from Steam, try again later?');
-                return;
-            }
-            if (error || response.statusCode !== 200){
-                console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
-                reject('Could not get inventory from Steam, try again later?');
-                return;
-            }
+                if (response.statusCode === 429) {
+                    console.log('Rate limited');
+                    reject('Could not get inventory from Steam, try again later?');
+                    return;
+                }
+                if (error || response.statusCode !== 200){
+                    console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
+                    reject('Could not get inventory from Steam, try again later?');
+                    return;
+                }
 
-            if (!JSON.parse(body).success) {
-                console.log(JSON.parse(body).Error);
-                reject('Could not get inventory from Steam, try again later?');
-                return;
-            }
+                if (!JSON.parse(body).success) {
+                    console.log(JSON.parse(body).Error);
+                    reject('Could not get inventory from Steam, try again later?');
+                    return;
+                }
 
-            var items = JSON.parse(body).rgDescriptions;
-            var ids = JSON.parse(body).rgInventory;
+                var items = JSON.parse(body).rgDescriptions;
+                var ids = JSON.parse(body).rgInventory;
             }
             catch (error) {
                 console.log(`Error: ${error} - Status Code: ${response.statusCode}`);
@@ -172,164 +170,174 @@ function getInventory(steamid){
 
             let itemsPropertiesToReturn = [];
 
-            for (let item in items) {
-                if (items[item].marketable === 1) {
-                    let name = items[item].name;
-                    let marketlink = "https://steamcommunity.com/market/listings/730/" + items[item].market_hash_name;
-                    let classid = items[item].classid;
-                    let instanceid = items[item].instanceid;
-                    var assetid = "";
-                    for (let asset in ids){
-                        if(ids[asset].classid===classid&&ids[asset].instanceid===instanceid){
-                            assetid = ids[asset].id;
+            for (let asset in ids) {
+                var assetid = ids[asset].id;
+                var position = ids[asset].pos;
+
+                for (let item in items) {
+                    if(ids[asset].classid===items[item].classid&&ids[asset].instanceid===items[item].instanceid){
+                        let name = items[item].name;
+                        let marketlink = "https://steamcommunity.com/market/listings/730/" + items[item].market_hash_name;
+                        let classid = items[item].classid;
+                        let instanceid = items[item].instanceid;
+                        let exterior = items[item].descriptions[0].value.split('Exterior: ')[1];
+                        exterior = exterior === undefined ? "" : exterior;
+                        let namecolor = items[item].name_color;
+                        let icon = steam_static_image_url + items[item].icon_url + iconSize;
+                        let iconLarge = steam_static_image_url + items[item].icon_url_large;
+                        let type = items[item].type;
+                        let tradability = "Tradable";
+
+
+                        if (items[item].tradable === 0) {
+                            tradability = new Date(items[item].cache_expiration);
                         }
-                    }
-                    let exterior = items[item].descriptions[0].value.split('Exterior: ')[1];
-                    exterior = exterior === undefined ? "" : exterior;
-                    let namecolor = items[item].name_color;
-                    let icon = steam_static_image_url + items[item].icon_url + iconSize;
-                    let iconLarge = steam_static_image_url + items[item].icon_url_large;
-                    let type = items[item].type;
-                    let tradability = "Tradable";
 
-
-                    if (items[item].tradable === 0) {
-                        tradability = new Date(items[item].cache_expiration);
-                    }
-
-                    var description ="";
-                    try {
-                        if(items[item].descriptions!==undefined||items[item].descriptions[2]!==undefined){
-                            description = items[item].descriptions[2].value;
+                        if(items[item].marketable === 0){
+                            tradability = "Non-Tradable"
                         }
-                    }
-                    catch(error) {
-                    }
 
-                    var category ="";
-                    try {
-                        if(items[item].tags!==undefined||items[item].tags[0]!==undefined){
-                            category = items[item].tags[0].name;
-                        }
-                    }
-                    catch(error) {
-                    }
-
-                    var weapon ="";
-                    try {
-                        if(items[item].tags!==undefined||items[item].tags[1]!==undefined){
-                            weapon = items[item].tags[1].name;
-
-                            if(category==="Key"){
-                                weapon="Key";
-                            }
-                            if(category==="Gloves"){
-                                weapon="Gloves";
-                            }
-                            if(category==="Music Kit"){
-                                weapon="Music Kit";
-                            }
-                            if(category==="Graffiti"){
-                                weapon="Graffiti";
-                            }
-                            if(category==="Container"){
-                                weapon="Case";
-                            }
-                            if(category==="Collectible"){
-                                weapon="Pin";
+                        var description ="";
+                        try {
+                            if(items[item].descriptions!==undefined||items[item].descriptions[2]!==undefined){
+                                description = items[item].descriptions[2].value;
                             }
                         }
-                    }
-                    catch(error) {
-                    }
-
-                    var quality = "stock";
-                    if(/Base Grade/i.test(type)){
-                        quality ="base_grade";
-                    }
-                    else if(/Classified/i.test(type)){
-                        quality ="classified";
-                    }
-                    else if(/Consumer Grade/i.test(type)){
-                        quality ="consumer_grade";
-                    }
-                    else if(/Contraband/i.test(type)){
-                        quality ="contraband";
-                    }
-                    else if(/Covert/i.test(type)){
-                        quality ="covert";
-                    }
-                    else if(/Exotic/i.test(type)){
-                        quality ="exotic";
-                    }
-                    else if(/Extraordinary/i.test(type)){
-                        quality ="extraordinary";
-                    }
-                    else if(/High Grade/i.test(type)){
-                        quality ="high_grade";
-                    }
-                    else if(/Industrial Grade/i.test(type)){
-                        quality ="industrial_grade";
-                    }
-                    else if(/Mil-Spec Grade/i.test(type)){
-                        quality ="milspec_grade";
-                    }
-                    else if(/Remarkable/i.test(type)){
-                        quality ="remarkable";
-                    }
-                    else if(/Restricted/i.test(type)){
-                        quality ="restricted";
-                    }
-                    else if(/Stock/i.test(type)){
-                        quality ="stock";
-                    }
-
-                    var nametag ="";
-                    try {
-                        if(items[item].fraudwarnings!==undefined||items[item].fraudwarnings[0]!==undefined){
-                            nametag = items[item].fraudwarnings[0].split('Name Tag: ')[1];
+                        catch(error) {
                         }
-                    }
-                    catch(error) {
-                    }
 
-
-                    var inspectLink ="";
-                    try {
-                        if(items[item].actions!==undefined||items[item].actions[0]!==undefined){
-                            let beggining = items[item].actions[0].link.split('%20S')[0];
-                            let end = items[item].actions[0].link.split('%assetid%')[1];
-                            inspectLink = beggining + "%20S"+steamid + "A"+ assetid + end;
+                        var category ="";
+                        try {
+                            if(items[item].tags!==undefined||items[item].tags[0]!==undefined){
+                                category = items[item].tags[0].name;
+                            }
                         }
+                        catch(error) {
+                        }
+
+                        var weapon ="";
+                        try {
+                            if(items[item].tags!==undefined||items[item].tags[1]!==undefined){
+                                weapon = items[item].tags[1].name;
+
+                                if(category==="Key"){
+                                    weapon="Key";
+                                }
+                                if(category==="Gloves"){
+                                    weapon="Gloves";
+                                }
+                                if(category==="Music Kit"){
+                                    weapon="Music Kit";
+                                }
+                                if(category==="Graffiti"){
+                                    weapon="Graffiti";
+                                }
+                                if(category==="Container"){
+                                    weapon="Case";
+                                }
+                                if(category==="Collectible"){
+                                    weapon="Pin";
+                                }
+                            }
+                        }
+                        catch(error) {
+                        }
+
+                        var quality = "stock";
+                        if(/Base Grade/i.test(type)){
+                            quality ="base_grade";
+                        }
+                        else if(/Classified/i.test(type)){
+                            quality ="classified";
+                        }
+                        else if(/Consumer Grade/i.test(type)){
+                            quality ="consumer_grade";
+                        }
+                        else if(/Contraband/i.test(type)){
+                            quality ="contraband";
+                        }
+                        else if(/Covert/i.test(type)){
+                            quality ="covert";
+                        }
+                        else if(/Exotic/i.test(type)){
+                            quality ="exotic";
+                        }
+                        else if(/Extraordinary/i.test(type)){
+                            quality ="extraordinary";
+                        }
+                        else if(/High Grade/i.test(type)){
+                            quality ="high_grade";
+                        }
+                        else if(/Industrial Grade/i.test(type)){
+                            quality ="industrial_grade";
+                        }
+                        else if(/Mil-Spec Grade/i.test(type)){
+                            quality ="milspec_grade";
+                        }
+                        else if(/Remarkable/i.test(type)){
+                            quality ="remarkable";
+                        }
+                        else if(/Restricted/i.test(type)){
+                            quality ="restricted";
+                        }
+                        else if(/Stock/i.test(type)){
+                            quality ="stock";
+                        }
+
+                        var nametag ="";
+                        try {
+                            if(items[item].fraudwarnings!==undefined||items[item].fraudwarnings[0]!==undefined){
+                                nametag = items[item].fraudwarnings[0].split('Name Tag: ')[1];
+                            }
+                        }
+                        catch(error) {
+                        }
+
+
+                        var inspectLink ="";
+                        try {
+                            if(items[item].actions!==undefined||items[item].actions[0]!==undefined){
+                                let beggining = items[item].actions[0].link.split('%20S')[0];
+                                let end = items[item].actions[0].link.split('%assetid%')[1];
+                                inspectLink = beggining + "%20S"+steamid + "A"+ assetid + end;
+                            }
+                        }
+                        catch(error) {
+                        }
+
+                        var keywords = `${name} ${items[item].market_hash_name} ${type} ${nametag} ${quality} ${category} ${weapon.toLowerCase() + name.split('|')[1]}`;
+
+
+                        itemsPropertiesToReturn.push({
+                            name: name,
+                            marketlink: marketlink,
+                            classid: classid,
+                            instanceid: instanceid,
+                            assetid: assetid,
+                            exterior: exterior,
+                            type: type,
+                            icon: icon,
+                            namecolor: namecolor,
+                            iconLarge: iconLarge,
+                            tradability: tradability,
+                            quality: quality,
+                            nametag: nametag,
+                            inspectLink: inspectLink,
+                            description: description,
+                            keywords: keywords.toLowerCase(),
+                            category: category,
+                            weapon: weapon,
+                            position: position
+                        })
                     }
-                    catch(error) {
-                    }
-
-                    var keywords = `${name} ${items[item].market_hash_name} ${type} ${nametag} ${quality} ${category} ${weapon.toLowerCase() + name.split('|')[1]}`;
-
-
-                    itemsPropertiesToReturn.push({
-                        name: name,
-                        marketlink: marketlink,
-                        classid: classid,
-                        instanceid: instanceid,
-                        assetid: assetid,
-                        exterior: exterior,
-                        type: type,
-                        icon: icon,
-                        namecolor: namecolor,
-                        iconLarge: iconLarge,
-                        tradability: tradability,
-                        quality: quality,
-                        nametag: nametag,
-                        inspectLink: inspectLink,
-                        description: description,
-                        keywords: keywords.toLowerCase(),
-                        category: category,
-                        weapon: weapon
-                    })
                 }
             }
+
+            function compare(a,b) {
+                return a.position - b.position;
+            }
+
+            itemsPropertiesToReturn.sort(compare);
             resolve(itemsPropertiesToReturn);
         });
     });

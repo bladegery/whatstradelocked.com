@@ -149,6 +149,17 @@ footer{
     color: #9fcdff;
 }
 
+.count{
+    color: yellow;
+    position: absolute;
+    /*right: 50%;*/
+    left: 10px;
+    bottom: 40%;
+    font-size: 2.5em;
+    font-weight: bold;
+
+}
+
 .exterior{
     position: absolute;
     left: 0px;
@@ -175,7 +186,7 @@ footer{
     margin-right: auto;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    width: 276px;
+    width: 286px;
 }
 
 .inventoryBuildingBlock{
@@ -233,6 +244,10 @@ footer{
 
 .restricted, .remarkable{
     background: rgba(136, 71, 255, .2); !important;
+}
+
+.stock{
+    background: rgba(106, 97, 86, .2); !important;
 }
 
 footer {

@@ -139,7 +139,7 @@ $(document).ready(function(){
     $( "[data-countdown]" ).each(function() {
         let $this = $(this);
 
-        if(!($this.attr("data-countdown")==='Tradable')){
+        if(!(($this.attr("data-countdown")==='Tradable')||($this.attr("data-countdown")==='Non-Tradable'))){
             let countDownDate =  new Date($this.attr("data-countdown"));
 
             let x = setInterval(function() {
@@ -182,6 +182,22 @@ $(document).ready(function(){
         $(this).tooltip();
     });
 
+    $( ".inventoryItem" ).each(function() {
+        $item = $(this);
+        var count = 0;
+
+        if($item.attr("data-weapon")==="Key"||$item.attr("data-weapon")==="Case"||$item.attr("data-name")==="Name Tag"){
+            $( ".inventoryItem" ).each(function() {
+                if(($item.attr("data-name")===$(this).attr("data-name"))&&($item.attr("data-tradability")===$(this).attr("data-tradability"))){
+                    count++;
+                    if(count>1){
+                        $(this).remove();
+                    }
+                }
+            });
+            $item.children(".itemImageContainer").children(".count").text("x" + count);
+        }
+    });
 
     let slider = document.getElementById("lock_time_slider");
     let output = document.getElementById("daysleft");
@@ -199,7 +215,7 @@ $(document).ready(function(){
         $( "[data-countdown]" ).each(function() {
             let $this = $(this);
 
-            if(!($this.attr("data-countdown")==='Tradable')){
+            if(!(($this.attr("data-countdown")==='Tradable')||($this.attr("data-countdown")==='Non-Tradable'))){
                 let countDownDate =  new Date($this.attr("data-countdown"));
                 let distance = countDownDate - now;
 
