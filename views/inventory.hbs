@@ -7,10 +7,11 @@
     <title>{{profiledetails.personaname}} - What's trade locked?</title>
 
     {{> include}}
+    <script src="/js/inventory.js"></script>
 
 
 </head>
-<body>
+<>
 {{> navigation}}
 
 <div class="container">
@@ -19,7 +20,7 @@
             <div class="row">
                 <div class="col-lg-4 text-center">
                     <div id="profileInfo" class="inventoryBuildingBlock">
-                        <h3 id="profileName" class="{{getStateClass profiledetails.personastate}}">{{profiledetails.personaname}}'s inventory</h3>
+                        <h3 id="profileName" class="{{getStateClass profiledetails.personastate}}" data-steamid="{{profiledetails.steamid}}">{{profiledetails.personaname}}'s inventory</h3>
                         <a href="{{profiledetails.profileurl}}" target="_blank">
                             <img src="{{profiledetails.avatar}}" id="avatar" class="{{getStateClass profiledetails.personastate}}" alt="Avatar of {{profiledetails.personaname}}">
                         </a>
@@ -46,7 +47,9 @@
                 </div>
                 <div class="col-lg-8 text-center">
                     <div id="filters" class="inventoryBuildingBlock">
-                        <h3>Search or filter {{this.itemCount}} items</h3>
+                        <div id="searchTitle">
+                            <span>Search or filter </span> <span id="inventoryTotal"></span> <span> items</span>
+                        </div>
                         <div class="container">
                             <div class="row">
                                 <div id="resetFilters" class="filterIcon col-lg-1 steamOnlineBlue" data-weapon="" title="Reset all filters">
@@ -57,7 +60,6 @@
                                     <input type="range" min="0" max="8" step="1" value="8" class="slider" id="lock_time_slider">
                                 </div>
                             </div>
-                            <!--<input id="onPageSearch" type="text" placeholder="Search for an item in this inventory">-->
                         </div>
                         <div class="row">
                             <div class="col-1">
@@ -71,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="col-10">
-                                <input id="onPageSearch" type="text" placeholder="Search for an item in this inventory">
+                                <input id="onPageSearch" class="darkInput" type="text" placeholder="Search for an item in this inventory">
                             </div>
                         </div>
                         <div class="row">
@@ -160,7 +162,14 @@
         </div>
     </div>
 </div>
-{{> inventorycontents}}
+
+<div id="inventoryContents">
+    <div id="loadingInvSpinnerContainer" class="container align-content-center text-center">
+        <svg width="200px"  height="200px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-eclipse" style="background: none;"><path ng-attr-d="{{config.pathCmd}}" ng-attr-fill="{{config.color}}" stroke="none" d="M10 50A40 40 0 0 0 90 50A40 42 0 0 1 10 50" fill="#57cbde" transform="rotate(48 50 51)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 51;360 50 51" keyTimes="0;1" dur="1s" begin="0s" repeatCount="indefinite"></animateTransform></path></svg>
+        <div id="loadingInvText">Loading inventory..</div>
+    </div>
+</div>
+
 
 {{> footer}}
 </body>

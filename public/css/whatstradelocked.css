@@ -13,12 +13,20 @@ ul, li{
 
 footer{
     margin: 1rem;
+    display: flex;
+    align-items: center;
 }
 
 @media (min-width: 992px) {
     body {
         padding-top: 56px;
     }
+}
+
+.navInput{
+    background-color: #1d2124;
+    color: white;
+    border-color: #1d2124;
 }
 
 .changelogDate{
@@ -153,11 +161,12 @@ footer{
     color: yellow;
     position: absolute;
     /*right: 50%;*/
-    left: 10px;
+    left: 40%;
     bottom: 40%;
     font-size: 2.5em;
     font-weight: bold;
-
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
 }
 
 .exterior{
@@ -187,6 +196,8 @@ footer{
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     width: 286px;
+    border-bottom: solid;
+    border-width: 4px;
 }
 
 .inventoryBuildingBlock{
@@ -220,39 +231,50 @@ footer{
 
 .base_grade, .consumer_grade{
     background: rgba(255, 255, 255, .2); !important;
+    border-color: rgba(255, 255, 255);
 }
 
 .classified, .exotic{
     background: rgba(211, 44, 230, .2); !important;
+    border-color: rgba(211, 44, 230);
 }
 
 .contraband{
     background: rgba(228, 174, 57, .2); !important;
+    border-color: rgba(228, 174, 57);
 }
 
 .covert, .extraordinary{
     background: rgba(235, 75, 75, .2); !important;
+    border-color: rgba(235, 75, 75);
 }
 
 .high_grade, .milspec_grade{
     background: rgba(75, 105, 255, .2); !important;
+    border-color: rgba(75, 105, 255);
 }
 
 .industrial_grade{
     background: rgba(94, 152, 217, .2); !important;
+    border-color: rgba(94, 152, 217);
 }
 
 .restricted, .remarkable{
     background: rgba(136, 71, 255, .2); !important;
+    border-color: rgba(136, 71, 255);
 }
 
 .stock{
     background: rgba(106, 97, 86, .2); !important;
+    border-color: rgba(106, 97, 86);
 }
 
-footer {
-    display: flex;
-    align-items: center;
+.darkInput{
+    background-color: #1d2124;
+    color: white;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-color: #1d2124;;
 }
 
 #avatar{
@@ -262,18 +284,33 @@ footer {
 
 }
 
+#steam_user_input_main{
+    width: 60%;
+}
+
 #onPageSearch{
     width: 80%;
-    background-color: #1d2124;
-    color: white;
-    margin: 0.5rem;
-    padding: 0.5rem;
-    border-color: #1d2124;;
+}
 
+#searchTitle{
+    font-size: 2rem;
+    color: white;
+}
+
+#loadingInvText{
+    font-size: 1.5rem;
+    color: white;
 }
 
 #inventory{
     margin-top: 0;
+}
+
+#loadingInvSpinnerContainer{
+    align-content: center;
+    text-align: center;
+    margin: auto;
+    padding: auto;
 }
 
 
@@ -290,5 +327,4 @@ footer {
     url('../fonts/csgo_icons.svg#csgo_icons') format('svg');
     /*https://www.unknowncheats.me/forum/cs-go-releases/169881-csgo-weapon-icons-ttf-font.html*/
 }
-
 

@@ -40,7 +40,8 @@ app.use((req, res, next) =>{
 
 //TODO:
 //sanitize input fields before adding database
-//sorting
+//add og:image and pimp up homepage
+//
 
 app.post("/",function(req,res){
     // sanitize(req.body.steam_user_input).trim().escape()=>{
@@ -65,21 +66,13 @@ app.get("/changelog",function(req,res){
 
 app.get("/inventory/:id", function (req, res, next) {
     if(steamID64regex.test(req.params.id)){
-        getInventory(req.params.id).then((inventory) => {
-            getProfileDetails(req.params.id).then((profiledetails) => {
-                res.render('inventory.hbs', {
-                    items: inventory,
-                    itemCount: inventory.length,
-                    profiledetails: profiledetails
-                });
-            }).catch((err) => {
-                res.render('index.hbs', {
-                    error: "Could not get Steam Profile information,  try again later?"
-                });
+        getProfileDetails(req.params.id).then((profiledetails) => {
+            res.render('inventory.hbs', {
+                profiledetails: profiledetails
             });
         }).catch((err) => {
             res.render('index.hbs', {
-                error: "Could not get inventory from Steam, try again later?"
+                error: "Could not get Steam Profile information,  try again later?"
             });
         });
     }
@@ -88,6 +81,19 @@ app.get("/inventory/:id", function (req, res, next) {
             error: 'That is not a valid steam id!'
         });
     }
+});
+
+app.get('/inventoryContents/:id', function (req, res) {
+    getInventory(req.params.id).then((inventory) => {
+        res.render('partials/inventorycontents.hbs', {
+            items: inventory,
+            itemCount: inventory.length
+        });
+    }).catch((err) => {
+        res.render('index.hbs', {
+            error: "Could not get inventory from Steam, try again later?"
+        });
+    });
 });
 
 function getSteamID64(user_input) {
@@ -385,6 +391,7 @@ function getProfileDetails(steamid){
 
             resolve({
                 error: 0,
+                steamid: steamid,
                 personaname: player.personaname,
                 realname: player.realname,
                 profileurl: player.profileurl,
@@ -417,7 +424,6 @@ hbs.registerHelper('getStateClass', (personastate) =>{
     }
     return stateClass;
 });
-
 
 hbs.registerHelper('getTradabilityIcon', (tradability) =>{
     var tradabilityIcon = "fa-check";

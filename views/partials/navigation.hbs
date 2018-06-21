@@ -1,7 +1,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand steamOnlineBlue" href="/">
+        <a class="navbar-brand steamOnlineBlue" href="/" title="What's trade locked? - Home">
             <i class="fas fa-lock"></i>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -9,11 +9,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <form action="/" method="post">
-                <div class="input-group" style="width:30em;">
-                    <input id="steam_user_input" type="text" name="steam_user_input" value="" class="form-control" placeholder="Look up an inventory">
+                <div class="input-group">
+                    <input id="navSearchInput" style="width:30rem;" name="steam_user_input" type="text" value="" class="navInput" placeholder="Look up an inventory">
                     <div class="input-group-btn">
-                        <button type="submit" class="btn btn-default">
-                            <span class="fa fa-search"></span>
+                        <button id="navSearchButton" type="submit" class="btn btn-default">
+                            <span class="fas fa-search"></span>
                         </button>
                     </div>
                 </div>
@@ -23,12 +23,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/changelog">Changelog</a>
                 </li>
-                <!--<li class="nav-item">-->
-                    <!--<a class="nav-link" href="#">Services</a>-->
-                <!--</li>-->
-                <!--<li class="nav-item">-->
-                    <!--<a class="nav-link" href="#">Contact</a>-->
-                <!--</li>-->
             </ul>
         </div>
     </div>

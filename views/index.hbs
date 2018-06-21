@@ -7,6 +7,7 @@
     <title>What's trade locked?</title>
 
     {{> include}}
+    <script src="/js/whatstradelocked.js"></script>
 
 
 </head>
@@ -16,33 +17,33 @@
 <!-- Page Content -->
 <div class="container">
     <div class="row">
-        <div class="col-lg-12 text-center">
+        <div class="col-lg-12 text-center align-content-center">
             <h1 class="mt-5">What's trade locked?</h1>
-            <p class="lead">(In development)</p>
             <p>Find out which items have trade restrictions and when they are tradable. Enter someone’s steam profile or trade link to load their inventory. </p>
             <br>
             <p>Steam profile or trade link: </p>
             <form action="/" method="post">
-                <input id="steam_user_input" type="text" name="steam_user_input" value="" class="form-control" placeholder="Paste here">
-                <button type="submit">Load inventory</button>
+            <input id="steam_user_input_main" name="steam_user_input" class="darkInput" type="text" placeholder="Paste here">
+            <button type="submit" class="btn btn-default">
+                <span class="fas fa-search"></span>
+            </button>
             </form>
             <p>Steam profile example: https://steamcommunity.com/id/gergelyszabo/</p>
             <p>Trade link example: https://steamcommunity.com/tradeoffer/new/?partner=75764727&token=tx0asz7q</p>
             <p>Or check an inventory directly <a href="/inventory/76561198036030455">by link</a>.</p>
             <br>
-
             <p>
                 What is a trade lock? At the end of March of 2018 Valve implemented a <a target="_blank" href="http://blog.counter-strike.net/index.php/2018/03/20308/">new update to CS:GO trading</a>.
                 They restrict the trading of newly received items by locking them to the account for 7 days.
                 Once an inventory is loaded there is a countdown displayed for every item that marks the end of this seven-day trade cooldown.
             </p>
-            <p>
-                PS: I am working on the rate limiting issues.
-            </p>
 
             <div id="error">
                 <span>{{error}}</span>
             </div>
+            <br>
+            <p>This is what an inventory looks like when loaded and filtered to m4s, aks and m9s:</p>
+            <img style="width: 100%" src="/img/og.png">
         </div>
     </div>
 </div>
