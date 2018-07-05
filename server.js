@@ -8,9 +8,10 @@ const express = require('express'),
     SteamTotp = require("steam-totp"),
     SteamCommunity = require("steamcommunity"),
     community = new SteamCommunity(),
-    client = new SteamUser();
-// steam = require("./steam.js");
-
+    client = new SteamUser(),
+    {mongoose} = require('./database/mongoose'),
+    {Bookmark} = require('.models/bookmark'),
+    {User} = require('.models/user');
 
 // const { check, validationResult } = require('express-validator/check');
 // const { matchedData, sanitize } = require('express-validator/filter');
@@ -40,8 +41,7 @@ app.use((req, res, next) =>{
 
 //TODO:
 //sanitize input fields before adding database
-//add og:image and pimp up homepage
-//
+//mobile friendliness
 
 app.post("/",function(req,res){
     // sanitize(req.body.steam_user_input).trim().escape()=>{

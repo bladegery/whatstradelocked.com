@@ -27,6 +27,7 @@ footer{
     background-color: #1d2124;
     color: white;
     border-color: #1d2124;
+    padding-left: 0.5rem;
 }
 
 .changelogDate{
