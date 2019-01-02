@@ -8,10 +8,10 @@ const express = require('express'),
     SteamTotp = require("steam-totp"),
     SteamCommunity = require("steamcommunity"),
     community = new SteamCommunity(),
-    client = new SteamUser(),
-    {mongoose} = require('./database/mongoose'),
-    {Bookmark} = require('.models/bookmark'),
-    {User} = require('.models/user');
+    client = new SteamUser();
+    // {mongoose} = require('./database/mongoose'),
+    // {Bookmark} = require('.models/bookmark'),
+    // {User} = require('.models/user');
 
 // const { check, validationResult } = require('express-validator/check');
 // const { matchedData, sanitize } = require('express-validator/filter');
