@@ -1,14 +1,4 @@
 whatstradelocked.com
 ==============
-
-Will become a sub heading
---------------
-
-*This will be Italic*
-
-**This will be Bold**
-
-- This will be a list item
-- This will be a list item
-
-    Add a indent and this will end up as code
+The source of a site that was used to check when people's csgo items would become tradable among other things.
+It's written in node and used to run on Google Appengine then on AWS Elastic Beanstalk
