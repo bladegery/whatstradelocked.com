@@ -323,8 +323,6 @@ $(document).ready(function() {
     }
 
     function needfilters() {
-        console.log(weaponFilters);
-        console.log(filters);
         if(filters.filter===0&&weaponFilters.filter===0){
             removeFilters();
         }
