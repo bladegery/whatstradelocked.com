@@ -1,20 +1,11 @@
 const express = require('express'),
-    hbs = require('hbs'),
+    hbs = require('express-handlebars'),
     bodyParser = require('body-parser'),
     request = require("request"),
     steamIDConvertor = require("steam-id-convertor"),
-    app = express(),
-    SteamUser = require("steam-user"),
-    SteamTotp = require("steam-totp"),
-    SteamCommunity = require("steamcommunity"),
-    community = new SteamCommunity(),
-    client = new SteamUser();
-    // {mongoose} = require('./database/mongoose'),
-    // {Bookmark} = require('.models/bookmark'),
-    // {User} = require('.models/user');
+    path = require('path'),
+    app = express();
 
-// const { check, validationResult } = require('express-validator/check');
-// const { matchedData, sanitize } = require('express-validator/filter');
 
 const steam_static_image_url = 'https://steamcommunity-a.akamaihd.net/economy/image/',
     iconSize = '/256fx256f', //can switch number to 128, 256, etc. for larger or 32, etc. for smaller
@@ -22,11 +13,18 @@ const steam_static_image_url = 'https://steamcommunity-a.akamaihd.net/economy/im
     steamCommunityRegex = new RegExp('steamcommunity.com/id/|steamcommunity.com/profiles/|steamcommunity.com/tradeoffer/new/\\?partner='),
     steamID64regex = new RegExp('[0-9]{17}');
 
+app.engine('hbs', hbs({
+    extname: 'hbs',
+    defaultLayout: '',
+    helpers: require(path.join(__dirname, 'helpers.js')),
+    layoutsDir: path.join(__dirname, 'views/layouts'),
+    partialsDir  : path.join(__dirname, 'views/partials')
+}));
 
-
-hbs.registerPartials(__dirname +'/views/partials');
+//hbs.registerPartials(path.join(__dirname, 'views/partials'));
 app.set('view-engine', 'hbs');
-app.use(express.static(__dirname + '/public'));
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, '/public')));
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -406,36 +404,15 @@ function getProfileDetails(steamid){
     });
 }
 
-
-hbs.registerHelper('getCurrentYear', () =>{
-    return new Date().getFullYear()
-});
-
-hbs.registerHelper('getStateClass', (personastate) =>{
-    var stateClass = "online";
-    if(/Offline/i.test(personastate)){
-        stateClass ="offline";
-    }
-    else if(/Online|Busy|Away|Snooze|Looking to trade|Looking to play/i.test(personastate)){
-        stateClass ="online"
-    }
-    else if(/In-game:/i.test(personastate)){
-        stateClass ="ingame"
-    }
-    return stateClass;
-});
-
-hbs.registerHelper('getTradabilityIcon', (tradability) =>{
-    var tradabilityIcon = "fa-check";
-    if(tradability!=="Tradable"){
-        tradabilityIcon ="fa-ban";
-    }
-    return tradabilityIcon;
-});
-
-
 const PORT = process.env.PORT || 8080;
 
-app.listen(PORT, ()=>{
-    console.log('Server is up');
-});
+const isInLambda = !!process.env.LAMBDA_TASK_ROOT;
+if (isInLambda) {
+    const serverlessExpress = require('aws-serverless-express');
+    const server = serverlessExpress.createServer(app);
+    exports.main = (event, context) => serverlessExpress.proxy(server, event, context)
+} else {
+    app.listen(PORT, ()=>{
+        console.log('Server is up, listening on port ' + PORT);
+    });
+}

@@ -17,21 +17,12 @@
   },
   "homepage": "https://gitlab.com/gergelyszabo/whatstradelocked.com#README",
   "dependencies": {
-    "aws-sdk": "^2.340.0",
+    "aws-serverless-express": "^3.3.6",
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
-    "express-validator": "^5.2.0",
-    "hbs": "^4.0.1",
-    "mongodb": "^3.0.10",
-    "mongoose": "^5.1.6",
-    "path-to-regexp": "^2.2.1",
-    "protobufjs": "^6.8.6",
-    "rangeslider.js": "^2.3.2",
+    "express-handlebars": "^3.0.2",
+    "path": "^0.12.7",
     "request": "^2.85.0",
-    "steam-client": "^2.5.7",
-    "steam-id-convertor": "^1.0.1",
-    "steam-totp": "^2.1.0",
-    "steam-user": "^3.27.1",
-    "steamcommunity": "^3.36.1"
+    "steam-id-convertor": "^1.0.1"
   }
 }
